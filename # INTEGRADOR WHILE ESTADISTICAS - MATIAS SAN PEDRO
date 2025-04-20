@@ -1,0 +1,56 @@
+# INTEGRADOR WHILE ESTADISTICAS - MATIAS SAN PEDRO 
+'''Realizar un programa que permita que el usuario ingrese todos los números que desee. Una vez finalizada la carga determinar:
+La suma acumulada de los números negativos. 
+La suma acumulada de los números positivos. 
+La cantidad de números negativos ingresados. 
+El promedio de los números positivos. 
+El número positivo más grande. 
+El porcentaje de números negativos ingresados, respecto del total de ingresos. 
+
+'''
+
+
+contador_negativos = 0
+acumulador_negativos = 0
+
+acumulador_positivos = 0
+contador_positivos = 0
+
+contador_total = 0
+
+ejecucion = True
+
+mayor = None
+
+
+while ejecucion == True:
+     
+    ingresar_numeros = int(input("ingrese aqui los numeros, ingrese 0 (CERO) para finalizar el ingreso \n" ))
+    #valido si son negativos o positivos
+    if ingresar_numeros >0:
+        contador_positivos +=1  #cuento los positivos 
+        acumulador_positivos +=ingresar_numeros #el total se guarda en "acumulador positivo"
+        
+    
+    if ingresar_numeros <0:
+        contador_negativos +=1
+        acumulador_negativos += ingresar_numeros
+        
+    
+    if mayor == None or ingresar_numeros > mayor: 
+       mayor = ingresar_numeros  # guardo el mas grande en la variable "mayor"
+       
+    if ingresar_numeros == 0: #salida del bucle 
+        ejecucion = False
+
+    promedio_positivos = acumulador_positivos/contador_positivos #promedio
+    
+    contador_total = contador_negativos + contador_positivos # el total de los numeros negativos y positivos ingresados
+    
+    porcentaje_de_negativos = contador_negativos * 100 / contador_total # el porcentaje de los negativos respecto al total
+
+
+# (no se como escalonar correctamente lo que esta dentro del print sin que se rompa, perdon )
+print(f"la suma acumulada de los numeros negativos es: {acumulador_negativos} \n la suma acumulada de los numeros positivos es: {acumulador_positivos} \n la cantidad de numeros negativos ingresada es: {contador_negativos}\n el promedio de los numeros positivos es: {promedio_positivos} \n el numero positivo mas grande es: {mayor} \n el porcentaje de numeros negativos ingresados es {porcentaje_de_negativos} respecto del total \n ") 
+
+
