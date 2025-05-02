@@ -1,0 +1,71 @@
+#DESAFIO CONDICIONAL (SIN TERMINAR) 
+# desafio condicionales 
+'''CONSIGNA : 
+    °Tarifa base:
+Todas las facturas incluyen un cargo fijo de $7000 además del costo por consumo.
+El costo por metro cúbico (m³) de agua es de $200/m³.
+    Bonificaciones y Recargos según tipo de cliente:
+    -Cliente Residencial:
+Si el consumo es menor a 30 m³, se aplica una bonificación del 10% sobre el costo del consumo.
+Si el consumo supera los 80 m³, se aplica un recargo del 15% sobre el costo del consumo.
+    -Cliente Comercial:
+Si el consumo es superior a 150 m³, se aplica una bonificación del 8% sobre el costo del consumo.
+Si el consumo supera los 300 m³, la bonificación aumenta al 12%.
+Si el consumo es menor a 50 m³, se aplica un recargo del 5%.
+    -Cliente Industrial:
+Si el consumo es superior a 500 m³, se aplica una bonificación del 20% sobre el costo del 
+consumo.
+Si el consumo supera los 1,000 m³, la bonificación aumenta al 30%.
+Si el consumo es menor a 200 m³, se aplica un recargo del 10%.
+    -Casos especiales:
+Si el cliente es Residencial y el total de la factura sin impuestos ni bonificaciones  es menor a $35000, se aplica un descuento adicional del 5%.
+En todos los casos, se aplica el IVA del 21% sobre el total.
+
+
+--------------------Requerimientos del programa:-------------------------------
+Solicitar al usuario:
+Cantidad de metros consumidos
+Tipo de cliente, que puede ser: Residencial, Comercial o Industrial.
+
+ -Calcular:
+Subtotal de consumo.
+Bonificaciones, si corresponde
+Recargos, si corresponde
+Subtotal, con recargos y bonificaciones.
+IVA aplicado (21%), si corresponde.
+Total final a pagar.
+Mostrar en pantalla el desglose de los cálculos.
+
+
+'''
+
+
+
+
+cargo_fijo = 7000
+metros_consumidos = int(input("Ingresar metros consumidos"))
+tipo_de_cliente = str(input("Que tipo de cliente?"))
+costo_por_metro = metros_consumidos * 200 #El costo por metro cúbico (m³) de agua es de $200/m3
+#metros consumidos ingresados por input por literalmente 200 
+precio_crudo = cargo_fijo + costo_por_metro # precio fijo + costo por metro cubico sin descuentos 
+
+#porcentajes
+porcent_10 = precio_crudo * 0.10
+porcent_15 = precio_crudo * 0.15 
+ 
+
+    
+
+'''
+match tipo_de_cliente:
+    case "residencial":
+        if metros_consumidos < 30:
+           pass
+
+    case "comercial":
+        pass
+    case "industrial":
+        pass
+    case _:
+        pass
+        '''
