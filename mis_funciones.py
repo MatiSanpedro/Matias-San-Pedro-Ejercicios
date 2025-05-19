@@ -257,7 +257,7 @@ def validar_datos_legajo(legajo:str): #devuelve False si el numero tiene menos d
         if len(legajo) != 5: #verifico que el numero tenga 5 cifras de largo con "len"
             bandera = False 
             
-        if numero < 48 or numero > 57: #aca modifique el rango porque me tiraba error al usar 0
+        if numero < 48 or numero > 57: #Si esta fuera del rango 48 - 57 da False 
             bandera = False
             
     return bandera
@@ -269,7 +269,7 @@ def validar_datos_genero(genero:str):
     bandera = False
     lista_de_validos = ['F', 'f', 'M', 'm', 'X', 'x']
     for i in lista_de_validos: #esto recorre la lista de validos 
-        if genero == i: # comparo lo ingresado con la lista , i toma el valor de cada elemento en cada iteracion
+        if genero == i: # comparo lo ingresado con la lista , i toma el valor de cada elemento de la lista en cada iteracion
             bandera = True   #cambia a True si coinciden
             print(f"encontre 1 {genero}")
         if len(genero) >1: #Si lo ingresado es mas de 1 caracter, se mantiene en False 
