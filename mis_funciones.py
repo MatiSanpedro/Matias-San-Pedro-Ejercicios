@@ -199,7 +199,6 @@ def lower_propio(cadena:str)-> str:
     return palabra_minusculas
 
 
-#UPPER PROPIO
 
 
 
@@ -247,7 +246,7 @@ def validar_datos_nombre(nombre:str): #devuelve True si hay letras,  False si ha
             if (ord(nombre[i]) >=97 and ord(nombre[i]) <=122) or (ord(nombre[i]) >=65 and ord(nombre[i]) <=90): #esto valida mayuscula y minuscula
                 verificado = nombre
                 bandera = True 
-                continue #cada vez que encuentro un dato valido, lo ignoro 
+                continue #cada vez que encuentro un dato valido, lo ignoro, la bandera igual arroja True
             if (ord(nombre[i]) == 241 or ord(nombre[i]) == 209): #esto valida las ñ - Ñ 
                 verificado = nombre
                 bandera = True
@@ -332,23 +331,170 @@ def buscar_vacio(lista:list)
             print(fila_marcela)
             break       
     '''
-nombres = input("meteme un nombre pah  ")
+nombres_lista = ["Marcela","Pepe","Florencia","Nestor","Ricardo","Ortencio","Jorge","Karina","Alejandra",
+           "Horacio","Paula","Nicole","Graciela","Mario","Gisela","Melina","Julieta","Omar","Laura",
+           "Iara","Maria","Marcia","Belen","Joel","Tito","Raul","Hernan","David","Ariel","Martina"]
+
+
 matriz_magna = [[0,0,0,0,0],
                 [0,0,0,0,0],
                 [0,0,0,0,0],]
-fila_disponible = 0
-match nombres:
-    
-    case "marcela":
-        for i in (matriz_magna):
-            for j in range(5):
-                nota = int(input(f"ingresar nota {j + 1}:  "))
-                matriz_magna[fila_disponible][j] = nota
-                print(f"marcela,{matriz_magna}")
-    case "pepe":
-        for i in (matriz_magna):
-            matriz_magna[1] 
-            print(matriz_magna) 
+'''
 
-    case "florencia":
-        print("florencia")
+contador_notas = 0
+bandera_general  = True #con esto controlo el bucle while general
+while bandera_general == True:
+    nombres = input("meteme un nombre aca  ")
+
+    match lower_propio(nombres): 
+        
+        case "marcela":
+            
+            for i in (matriz_magna): 
+                for j in range(5): #(solo tengo que trabajar usando 5 columnas)
+                    nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
+                    matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
+                    contador_notas +=1
+                    print(f"{nombres},{matriz_magna[0]}")
+                if contador_notas == 5:
+                    print("notas ingresadas correctamente. \n Fila de notas completa")
+                    fila_alumnos +=1 # cambio de alumno
+                    break
+                    
+            pregunta = input("desea continuar ingresando notas?\n 's' = Si \n 'cualquier tecla' = No") 
+            if pregunta == "s":
+                continue 
+            else:
+                bandera_general == False    
+                    
+                    
+        case "pepe":
+            for i in (matriz_magna):
+                matriz_magna[1] 
+                print(matriz_magna) 
+
+        case "florencia":
+            for i in (matriz_magna): 
+                for j in range(5): #(solo tengo que trabajar usando 5 columnas)
+                    nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
+                    matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
+                    contador_notas +=1
+                    print(f"{nombres},{matriz_magna}")
+                if contador_notas == 5:
+                    print("notas ingresadas correctamente. \n Fila de notas completa")
+                    
+                    break
+                    
+            pregunta = input("desea continuar ingresando notas?\n 's' = Si \n 'cualquier tecla' = No") 
+            if pregunta == "s":
+                continue
+            else:
+                bandera_general == False
+        
+        case"nestor":
+            print("nestor")
+
+        case "ricardo":
+            print("ricardo")
+        case "ortencio":
+            print("ortencio")
+        case "jorge":
+            print("jorge")
+
+        case "karina":
+            pass
+        case "alejandra":
+            pass
+        case "horacio":
+            pass
+        case "paula":
+            pass
+        case "nicole":
+            pass
+        case "graciela":
+            pass
+        case "mario":
+            pass
+        case "gisela":
+            pass
+        case "melina":
+            pass
+        case "julieta":
+            pass
+        case "omar":
+            pass
+        case "laura":
+            pass
+        case "iara":
+            pass
+        case "maria":
+            pass
+        case "marcia":
+            pass
+        case "belen":
+            pass
+        case "joel":
+            pass
+        case "tito":
+            pass
+        case "raul":
+            pass
+        case "hernan":
+            pass
+        case "david":
+            pass
+        case "ariel":
+            pass
+        case "martina":
+            pass    
+            
+            '''
+
+def ingresar_notas(nombres:str,matriz_magna:list)-> list:
+    fila_alumnos = 0  #esto controla las filas a donde se ponen los datos , 0 = marcela, 1 = pepe ,2 Florencia etc
+    contador_notas = 0
+
+    for i in (matriz_magna): 
+        for j in range(5): #(solo tengo que trabajar usando 5 columnas)
+            nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
+            matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
+            contador_notas +=1
+            print(f"{nombres},{matriz_magna[fila_alumnos]}")
+        if contador_notas == 5: #cuando el contador llega a 5 sale del bucle
+            print("notas ingresadas correctamente. \n Fila completa")
+            break
+        
+    return  matriz_magna
+
+
+
+# borrar esta mierda 
+'''
+
+def ingresar_notas(nombre, fila_disponible):
+    contador_notas = 0
+    for j in range(5):
+        nota = int(input(f"Ingresar nota {j + 1} para {nombre}: "))
+        matriz_magna[fila_disponible][j] = nota
+        contador_notas += 1
+    print(f"Notas ingresadas para {nombre}: {matriz_magna[fila_disponible]}")
+    print("Fila de notas completa")
+    return fila_disponible + 1  # Devuelve la siguiente fila disponible
+
+
+
+
+while True:
+    nombres = input("Ingrese el nombre del alumno: ")
+    
+    match lower_propio(nombres):
+        case "marcela" | "pepe" | "sofia" | "juan" | "ana" | "luis":  # etc., hasta 30 nombres
+            fila_disponible = ingresar_notas(nombres, fila_disponible)
+        
+        case _:
+            print("Nombre no reconocido.")
+
+    segunda_vuelta = input("¿Desea ingresar notas para otro alumno?\n's' = sí\nOtra tecla = no\n> ")
+    if segunda_vuelta.lower() != "s":
+        break
+'''
