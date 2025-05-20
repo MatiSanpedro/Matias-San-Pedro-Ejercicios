@@ -22,6 +22,33 @@ def potencia(numero:float,numero2:float)->float:
     operacion = numero ** numero2 
     return operacion
 
+#FUNCION NUMERO MAXIMO
+
+def maximo (numero_1:int,numero_2:int,numero_3:int) -> int:
+    numero_mayor = 0
+    #verifico que quede 1 si los 3 son iguales 
+    if numero_1 == numero_2 and numero_1 == numero_3:
+        numero_mayor = numero_1
+        #ahora los comparo para averiguar cual es mayor
+    elif numero_1 > numero_2 and numero_1 > numero_3:
+        numero_mayor = numero_1
+    elif numero_2 > numero_1 and numero_2 > numero_3:
+        numero_mayor = numero_2 
+    elif numero_3 > numero_1 and numero_3 > numero_2:
+        numero_mayor = numero_3
+        # si hay dos iguales y uno mayor 
+    elif numero_1 == numero_2 and numero_1 > numero_3:
+        numero_mayor = numero_1
+    elif numero_2 == numero_1 and numero_2 > numero_3:
+        numero_mayor = numero_2 
+    elif numero_3 == numero_2 and numero_3 > numero_2:
+        numero_mayor = numero_3
+    elif numero_3 == numero_1 and numero_3 > numero_2:
+        numero_mayor = numero_3
+    elif numero_2 == numero_3 and numero_2 > numero_1:
+        numero_mayor = numero_2
+    return numero_mayor 
+
 
 
 #MOSTRAR DATOS 
@@ -271,13 +298,57 @@ def validar_datos_genero(genero:str):
     for i in lista_de_validos: #esto recorre la lista de validos 
         if genero == i: # comparo lo ingresado con la lista , i toma el valor de cada elemento de la lista en cada iteracion
             bandera = True   #cambia a True si coinciden
-            print(f"encontre 1 {genero}")
+            
         if len(genero) >1: #Si lo ingresado es mas de 1 caracter, se mantiene en False 
-
-            print("invalido, ingrese un numero")
-        continue
+            continue
                 
     
     return bandera
     
 
+'''
+def buscar_vacio(lista:list)
+    
+    while True:
+        notas = int(input("ingresar nota"))
+        fila_vacia = -1    #busca una fila vacia, uso esto porque ninguna fila vacia vale -1 
+        for i in range(len(matriz_magna)):
+            if matriz_magna[i] == [0] * 5:
+                fila_disponible = i   #guardo 
+
+
+                
+                break
+                for j in range(len(matriz_magna[0])):
+                    fila_marcela = notas
+                    matriz_magna[i][j] = fila_marcela
+                    print(fila_marcela)
+        if contador_nota >= len(fila_marcela):
+            print("no hay mas espacio")
+            break
+
+        respuesta = input("S para seguir cargando")
+        if respuesta != "s":
+            print(fila_marcela)
+            break       
+    '''
+nombres = input("meteme un nombre pah  ")
+matriz_magna = [[0,0,0,0,0],
+                [0,0,0,0,0],
+                [0,0,0,0,0],]
+fila_disponible = 0
+match nombres:
+    
+    case "marcela":
+        for i in (matriz_magna):
+            for j in range(5):
+                nota = int(input(f"ingresar nota {j + 1}:  "))
+                matriz_magna[fila_disponible][j] = nota
+                print(f"marcela,{matriz_magna}")
+    case "pepe":
+        for i in (matriz_magna):
+            matriz_magna[1] 
+            print(matriz_magna) 
+
+    case "florencia":
+        print("florencia")
