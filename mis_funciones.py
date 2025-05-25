@@ -22,9 +22,8 @@ def potencia(numero:float,numero2:float)->float:
     operacion = numero ** numero2 
     return operacion
 
-#FUNCION NUMERO MAXIMO
 
-def maximo (numero_1:int,numero_2:int,numero_3:int) -> int:
+def maximo_numeros (numero_1:int,numero_2:int,numero_3:int) -> int:
     numero_mayor = 0
     #verifico que quede 1 si los 3 son iguales 
     if numero_1 == numero_2 and numero_1 == numero_3:
@@ -48,6 +47,10 @@ def maximo (numero_1:int,numero_2:int,numero_3:int) -> int:
     elif numero_2 == numero_3 and numero_2 > numero_1:
         numero_mayor = numero_2
     return numero_mayor 
+
+
+
+
 
 
 
@@ -305,6 +308,32 @@ def validar_datos_genero(genero:str):
     return bandera
     
 
+'''
+def buscar_vacio(lista:list)
+    
+    while True:
+        notas = int(input("ingresar nota"))
+        fila_vacia = -1    #busca una fila vacia, uso esto porque ninguna fila vacia vale -1 
+        for i in range(len(matriz_magna)):
+            if matriz_magna[i] == [0] * 5:
+                fila_disponible = i   #guardo 
+
+
+                
+                break
+                for j in range(len(matriz_magna[0])):
+                    fila_marcela = notas
+                    matriz_magna[i][j] = fila_marcela
+                    print(fila_marcela)
+        if contador_nota >= len(fila_marcela):
+            print("no hay mas espacio")
+            break
+
+        respuesta = input("S para seguir cargando")
+        if respuesta != "s":
+            print(fila_marcela)
+            break       
+    '''
 
 
             
@@ -331,30 +360,6 @@ def ingresar_notas(nombres:str,matriz_magna:list)-> list:
 '''
 # borrar esta mierda 
 
-def buscar_vacio(lista:list)
-    
-    while True:
-        notas = int(input("ingresar nota"))
-        fila_vacia = -1    #busca una fila vacia, uso esto porque ninguna fila vacia vale -1 
-        for i in range(len(matriz_magna)):
-            if matriz_magna[i] == [0] * 5:
-                fila_disponible = i   #guardo 
-
-
-                
-                break
-                for j in range(len(matriz_magna[0])):
-                    fila_marcela = notas
-                    matriz_magna[i][j] = fila_marcela
-                    print(fila_marcela)
-        if contador_nota >= len(fila_marcela):
-            print("no hay mas espacio")
-            break
-
-        respuesta = input("S para seguir cargando")
-        if respuesta != "s":
-            print(fila_marcela)
-            break  
 
 def ingresar_notas(nombre, fila_disponible):
     contador_notas = 0
@@ -440,5 +445,66 @@ def menu() -> int:
     
 
 
-llamar = menu()
-print(llamar)
+
+
+
+# FUNCION PROMEDIO 
+
+def promedios_alumnos(matriz_magna:list)->list:
+    promedios_guardados = []
+   
+
+    for i in matriz_magna:  #recorro las filas de la matriz con esto 
+        contador_a = 0  #necesito poner suma y contador aca, dentro del for i, asi inician en 0 cada vez que itera y no me sobreescribe los datos
+        suma1 = 0 
+        for j in i: #recorro numero por numero dentro de las filas (j in i)
+            suma1 += j  # aca guardo todo lo que recorre j en "suma1"
+            contador_a +=1 #siempre va a dar 5 
+            
+        promedio = suma1 / contador_a #guardo el numero en "promedio"
+        promedios_guardados += [promedio] #lo sumo a la lista, creando una nueva lista, porque no me deja sumarle numeros float
+            
+   
+    return promedios_guardados
+
+
+
+
+
+
+#llamada = promedios_alumnos(matriz_magna)
+#print(llamada)
+
+
+'''
+matriz_magna = [    [6,7,6,5,2],
+                    [8,7,7,5,10],
+                    [2,1,9,3,6],
+                    [8,8,9,9,9],
+                    [6,7,9,3,4],
+                    [3,4,3,4,8],
+                    [2,1,7,10,3],
+                    [1,7,10,2,10],
+                    [6,3,7,9,8],
+                    [8,8,10,7,6],  #10
+                    [1,7,5,9,5],
+                    [9,4,3,4,7],
+                    [3,4,6,3,1],
+                    [7,5,5,3,1],
+                    [2,5,3,3,4],
+                    [5,10,1,5,1],
+                    [5,6,8,2,3],
+                    [3,9,10,3,7],
+                    [6,5,9,7,9],
+                    [3,2,10,2,5], #20
+                    [3,9,4,3,1],
+                    [8,5,4,7,9],
+                    [1,6,4,2,10],
+                    [10,7,10,3,9],
+                    [4,7,2,1,3],
+                    [1,2,6,1,8],
+                    [10,10,4,3,3],
+                    [8,8,1,8,2],
+                    [8,4,1,8,9],
+                    [6,5,1,2,2]] #30  
+'''
