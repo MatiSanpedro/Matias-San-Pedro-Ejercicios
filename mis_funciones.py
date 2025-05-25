@@ -305,7 +305,32 @@ def validar_datos_genero(genero:str):
     return bandera
     
 
+
+
+            
+            
+
+
+def ingresar_notas(nombres:str,matriz_magna:list)-> list:
+    fila_alumnos = 0  #esto controla las filas a donde se ponen los datos , 0 = marcela, 1 = pepe ,2 Florencia etc
+    contador_notas = 0
+
+    for i in (matriz_magna): 
+        for j in range(5): #(solo tengo que trabajar usando 5 columnas)
+            nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
+            matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
+            contador_notas +=1
+            print(f"{nombres},{matriz_magna[fila_alumnos]}")
+        if contador_notas == 5: #cuando el contador llega a 5 sale del bucle
+            print("notas ingresadas correctamente. \n Fila completa")
+            break
+        
+    return  matriz_magna
+
+
 '''
+# borrar esta mierda 
+
 def buscar_vacio(lista:list)
     
     while True:
@@ -329,147 +354,7 @@ def buscar_vacio(lista:list)
         respuesta = input("S para seguir cargando")
         if respuesta != "s":
             print(fila_marcela)
-            break       
-    '''
-nombres_lista = ["Marcela","Pepe","Florencia","Nestor","Ricardo","Ortencio","Jorge","Karina","Alejandra",
-           "Horacio","Paula","Nicole","Graciela","Mario","Gisela","Melina","Julieta","Omar","Laura",
-           "Iara","Maria","Marcia","Belen","Joel","Tito","Raul","Hernan","David","Ariel","Martina"]
-
-
-matriz_magna = [[0,0,0,0,0],
-                [0,0,0,0,0],
-                [0,0,0,0,0],]
-'''
-
-contador_notas = 0
-bandera_general  = True #con esto controlo el bucle while general
-while bandera_general == True:
-    nombres = input("meteme un nombre aca  ")
-
-    match lower_propio(nombres): 
-        
-        case "marcela":
-            
-            for i in (matriz_magna): 
-                for j in range(5): #(solo tengo que trabajar usando 5 columnas)
-                    nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
-                    matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
-                    contador_notas +=1
-                    print(f"{nombres},{matriz_magna[0]}")
-                if contador_notas == 5:
-                    print("notas ingresadas correctamente. \n Fila de notas completa")
-                    fila_alumnos +=1 # cambio de alumno
-                    break
-                    
-            pregunta = input("desea continuar ingresando notas?\n 's' = Si \n 'cualquier tecla' = No") 
-            if pregunta == "s":
-                continue 
-            else:
-                bandera_general == False    
-                    
-                    
-        case "pepe":
-            for i in (matriz_magna):
-                matriz_magna[1] 
-                print(matriz_magna) 
-
-        case "florencia":
-            for i in (matriz_magna): 
-                for j in range(5): #(solo tengo que trabajar usando 5 columnas)
-                    nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
-                    matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
-                    contador_notas +=1
-                    print(f"{nombres},{matriz_magna}")
-                if contador_notas == 5:
-                    print("notas ingresadas correctamente. \n Fila de notas completa")
-                    
-                    break
-                    
-            pregunta = input("desea continuar ingresando notas?\n 's' = Si \n 'cualquier tecla' = No") 
-            if pregunta == "s":
-                continue
-            else:
-                bandera_general == False
-        
-        case"nestor":
-            print("nestor")
-
-        case "ricardo":
-            print("ricardo")
-        case "ortencio":
-            print("ortencio")
-        case "jorge":
-            print("jorge")
-
-        case "karina":
-            pass
-        case "alejandra":
-            pass
-        case "horacio":
-            pass
-        case "paula":
-            pass
-        case "nicole":
-            pass
-        case "graciela":
-            pass
-        case "mario":
-            pass
-        case "gisela":
-            pass
-        case "melina":
-            pass
-        case "julieta":
-            pass
-        case "omar":
-            pass
-        case "laura":
-            pass
-        case "iara":
-            pass
-        case "maria":
-            pass
-        case "marcia":
-            pass
-        case "belen":
-            pass
-        case "joel":
-            pass
-        case "tito":
-            pass
-        case "raul":
-            pass
-        case "hernan":
-            pass
-        case "david":
-            pass
-        case "ariel":
-            pass
-        case "martina":
-            pass    
-            
-            '''
-
-def ingresar_notas(nombres:str,matriz_magna:list)-> list:
-    fila_alumnos = 0  #esto controla las filas a donde se ponen los datos , 0 = marcela, 1 = pepe ,2 Florencia etc
-    contador_notas = 0
-
-    for i in (matriz_magna): 
-        for j in range(5): #(solo tengo que trabajar usando 5 columnas)
-            nota = int(input(f"ingresar nota de lugar {j + 1}:  "))
-            matriz_magna[fila_alumnos][j] = nota #guardo la nota ingresada en fila alumnos
-            contador_notas +=1
-            print(f"{nombres},{matriz_magna[fila_alumnos]}")
-        if contador_notas == 5: #cuando el contador llega a 5 sale del bucle
-            print("notas ingresadas correctamente. \n Fila completa")
-            break
-        
-    return  matriz_magna
-
-
-
-# borrar esta mierda 
-'''
+            break  
 
 def ingresar_notas(nombre, fila_disponible):
     contador_notas = 0
@@ -497,4 +382,63 @@ while True:
     segunda_vuelta = input("¿Desea ingresar notas para otro alumno?\n's' = sí\nOtra tecla = no\n> ")
     if segunda_vuelta.lower() != "s":
         break
+
+
+
+ #pista ayuda para el promedio 
+promedio = (variable_suma / cantidad_alumnos) * 10 // 1
+        promedio = promedio / 10
+yo hice eso para calcular la materia
+
+
 '''
+
+
+
+
+
+
+
+#MENU DE OPCIONES COMPLETO
+def menu() -> int:
+    while True:
+        opcion_elegida = input("|--------------------------| Elige una opción: |--------------------------| \n"
+            "1. Opción 1\n"
+            "2. Opción 2\n"
+            "3. Opción 3\n"
+            "4. Opción 4\n"
+            "5. Opción 5\n"
+            "6. Opción 6\n"
+            "7. Opción 7\n"
+            "8. Salir\n"
+            )
+        
+        match opcion_elegida:
+            case "1":
+                print("opción 1")
+            case "2":
+                print("opción 2")
+            case "3":
+                print("opción 3")
+            case "4":
+                print("opción 4")
+            case "5":
+                print("opción 5")
+            case "6":
+                print("opción 6")
+            case "7":
+                print("opción 7")
+            case "8":
+                print("Saliendo del menu...")
+                break
+            case _:
+                print("Opción no válida, ingrese un numero dentro de los especificados.")
+
+    return int(opcion_elegida)    
+
+     
+    
+
+
+llamar = menu()
+print(llamar)
