@@ -448,10 +448,10 @@ def menu() -> int:
             case "7":
                 print("opción 7")
             case "8":
-                print("Saliendo del menu...")
+                print("Saliendo del programa")
                 break
             case _:
-                print("Opción no válida, ingrese un numero dentro de los especificados.")
+                print("Opcion no valida, ingrese un numero dentro de los especificados.")
 
     return int(opcion_elegida)    
 
@@ -476,7 +476,7 @@ def promedios_alumnos(matriz_magna:list)->list:
             contador_a +=1 #siempre va a dar 5 
             
         promedio = suma_de_numeros / contador_a #guardo el numero en "promedio"
-        promedios_guardados += [promedio] #lo sumo a la lista, creando una nueva lista, porque no me deja sumarle numeros float
+        promedios_guardados += [promedio] #lo sumo a la lista, para evitar que sobreescriba los resultados
             
    
     return promedios_guardados
@@ -518,10 +518,33 @@ matriz_notas= [    [6,7,6,5,2],
                     [8,4,1,8,9],
                     [6,5,1,2,2]] #30  
 
-#ESTO ES EL INICIO DE LOS PROMEDIOS POR COLUMNA, FALTA TERMINAR 
+#PROMEDIOS POR COLUMNA 
+def mostrar_promedio_por_columnas_general(matriz_notas:list)->list:
+    resultado_1 = []
+    for j in range(len(matriz_notas[0])): #recorro las columnas con este for
+        suma_de_columnas = 0 
+        for i in range(len(matriz_notas)): 
+            suma_de_columnas += (matriz_notas[i][j]) #guardo los valores de las columnas, en este caso la primera en "suma de columnas"
+        
+        cuenta = (suma_de_columnas / len(matriz_notas)) #guardo la suma y la division en "cuenta", para sumarlo despues
+        resultado_1 += [cuenta] # lo sumo a la lista final evitando que sobreescriba 
+    
+    return resultado_1
+    
 
-for j in range(len(matriz_notas[0])): #recorro las columnas con este for
-    suma_de_columnas = 0 
-    for i in range(len(matriz_notas)):
-        suma_de_columnas += matriz_notas[i][j] #guardo los valores de las columnas, en este caso la primera en "suma de columnas
-    print(suma_de_columnas)
+
+lista_promedios = mostrar_promedio_por_columnas_general(matriz_notas)
+print(lista_promedios)
+
+# averigua el numero mayor en listas
+def el_mayor_en_listas(lista:list)-> list:
+    numero_mayor = lista[0] 
+    for i in range(0, len(lista)-1, 1):  
+        for j in range(i + 1, len(lista), 1):
+            if lista[i] > lista[j]:
+                numero_mayor = lista[i]
+
+    return numero_mayor
+
+llamar = el_mayor_en_listas(lista_promedios)
+print(llamar)
