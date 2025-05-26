@@ -50,19 +50,23 @@ def maximo_numeros (numero_1:int,numero_2:int,numero_3:int) -> int:
 
 
 
+#MAXIMO NUMEROS PROMEDIO
+
 
 
 
 
 #MOSTRAR DATOS 
-def mostrar_datos(lista_a:list, lista_b:list, lista_c:list) -> None:
+def mostrar_datos(lista_a:list, lista_b:list, lista_c:list, lista_d:list):
 
     for i in range(len(lista_a)):
 
         if len(lista_a[i]) < 8:
-            print(f"{lista_a[i]}\t\t{lista_b[i]}\t{lista_c[i]}")
+            print("NOMBRE\t\tLEGAJO GENERO  \tNOTAS")
+            print(f"{lista_a[i]}\t\t{lista_b[i]}\t{lista_c[i]}\t{lista_d[i]}")
         else:
-            print(f"{lista_a[i]}\t{lista_b[i]}\t{lista_c[i]}")    
+            print("NOMBRE\t\tLEGAJO GENERO  \tNOTAS")
+            print(f"{lista_a[i]}\t{lista_b[i]}\t{lista_c[i]}\t{lista_d[i]}")    
 
 
 #COPIAR LISTA
@@ -77,7 +81,7 @@ def copiar_lista(lista_a:list, lista_b:list)->list:
     return nombres_originales, edades_originales
 
 #ORDENAR ASCENDENTE
-def ordenar_ascendente(lista_a:list, lista_b:list, lista_c:list) -> None:
+def ordenar_ascendente(lista_a:list, lista_b:list, lista_c:list)->list :
 
     for i in range(0, len(lista_a)-1, 1):
         
@@ -106,19 +110,24 @@ def ordenar_ascendente(lista_a:list, lista_b:list, lista_c:list) -> None:
                     nombre_auxiliar = lista_a[i]
                     lista_a[i] = lista_a[j]
                     lista_a[j] = nombre_auxiliar
+    lista_de_retorno = []
+    for i in range(len(lista_a)):
+        lista_de_retorno += [(lista_a[i], lista_b[i], lista_c[i])]
+    
+    return lista_de_retorno
 
 #ORDENAR DESCENDENTE
-def ordenar_descendente(lista_a:list, lista_b:list, lista_c:list) -> None:
+def ordenar_descendente(lista_a:list, lista_b:list, lista_c:list)->list:
 
-    for i in range(0, len(lista_a)-1, 1):
+    for i in range(0, len(lista_a)-1, 1):  #empiezo desde 0 hasta el largo de la lista  -1 lugar (porque el último no tiene con quien comparar)
         
-        for j in range(i + 1, len(lista_a), 1):
+        for j in range(i + 1, len(lista_a), 1): # aca es lo inverso, j empieza desde i + 1 
             
             if lista_c[i] < lista_c[j]:
             
-                edad_auxiliar = lista_b[i]
-                lista_b[i] = lista_b[j]
-                lista_b[j] = edad_auxiliar
+                edad_auxiliar = lista_b[i] #guardo lista b en edad auxiliar 
+                lista_b[i] = lista_b[j]     # comparo las posiciones
+                lista_b[j] = edad_auxiliar  #devuelvo el valor guardado de lista b 
 
                 nombre_auxiliar = lista_a[i]
                 lista_a[i] = lista_a[j]
@@ -137,6 +146,11 @@ def ordenar_descendente(lista_a:list, lista_b:list, lista_c:list) -> None:
                     nombre_auxiliar = lista_a[i]
                     lista_a[i] = lista_a[j]
                     lista_a[j] = nombre_auxiliar
+    lista_de_retorno = []    
+    for i in range(len(lista_a)):
+        lista_de_retorno += [(lista_a[i], lista_b[i], lista_c[i])] #quiero guardar aca las 3 cosas para devolverlo por return
+    
+    return lista_de_retorno
 
 #SORT PROPIO
 def ordenar(lista_a:list, lista_b:list, lista_c:list, primer_modo = 1, segundo_modo= 1) -> None:
@@ -420,7 +434,7 @@ def menu() -> int:
         
         match opcion_elegida:
             case "1":
-                print("opción 1")
+                print("opción 1 asdasdad")
             case "2":
                 print("opción 2")
             case "3":
@@ -456,28 +470,24 @@ def promedios_alumnos(matriz_magna:list)->list:
 
     for i in matriz_magna:  #recorro las filas de la matriz con esto 
         contador_a = 0  #necesito poner suma y contador aca, dentro del for i, asi inician en 0 cada vez que itera y no me sobreescribe los datos
-        suma1 = 0 
+        suma_de_numeros = 0 
         for j in i: #recorro numero por numero dentro de las filas (j in i)
-            suma1 += j  # aca guardo todo lo que recorre j en "suma1"
+            suma_de_numeros += j  # aca guardo todo lo que recorre j en "suma_de_numeros"
             contador_a +=1 #siempre va a dar 5 
             
-        promedio = suma1 / contador_a #guardo el numero en "promedio"
+        promedio = suma_de_numeros / contador_a #guardo el numero en "promedio"
         promedios_guardados += [promedio] #lo sumo a la lista, creando una nueva lista, porque no me deja sumarle numeros float
             
    
     return promedios_guardados
 
-
-
-
-
-
+#promedios por columna 
 #llamada = promedios_alumnos(matriz_magna)
 #print(llamada)
 
 
-'''
-matriz_magna = [    [6,7,6,5,2],
+
+matriz_notas= [    [6,7,6,5,2],
                     [8,7,7,5,10],
                     [2,1,9,3,6],
                     [8,8,9,9,9],
@@ -507,4 +517,11 @@ matriz_magna = [    [6,7,6,5,2],
                     [8,8,1,8,2],
                     [8,4,1,8,9],
                     [6,5,1,2,2]] #30  
-'''
+
+#ESTO ES EL INICIO DE LOS PROMEDIOS POR COLUMNA, FALTA TERMINAR 
+
+for j in range(len(matriz_notas[0])): #recorro las columnas con este for
+    suma_de_columnas = 0 
+    for i in range(len(matriz_notas)):
+        suma_de_columnas += matriz_notas[i][j] #guardo los valores de las columnas, en este caso la primera en "suma de columnas
+    print(suma_de_columnas)
