@@ -377,29 +377,31 @@ def ingresar_notas(nombres:str,matriz_magna:list)-> list:
 
 def ingresar_notas(nombre, fila_disponible):
     contador_notas = 0
+    acumulador_1 = 0
     for j in range(5):
         nota = int(input(f"Ingresar nota {j + 1} para {nombre}: "))
-        matriz_magna[fila_disponible][j] = nota
+        matriz_magna[fila_vacia][j] = nota
         contador_notas += 1
-    print(f"Notas ingresadas para {nombre}: {matriz_magna[fila_disponible]}")
+        acumulador_1 +=1
+    print(f" {nombre}: {matriz_magna[fila_vacia]}")
     print("Fila de notas completa")
-    return fila_disponible + 1  # Devuelve la siguiente fila disponible
+    return fila_disponible + 1  # 
 
 
 
 
 while True:
-    nombres = input("Ingrese el nombre del alumno: ")
+    nombres = input("Ingrese el nombre  ")
     
     match lower_propio(nombres):
-        case "marcela" | "pepe" | "sofia" | "juan" | "ana" | "luis":  # etc., hasta 30 nombres
+        case "marcela" | "pepe" | "sofia" | "juan" | "ana" | "luis": 
             fila_disponible = ingresar_notas(nombres, fila_disponible)
         
         case _:
             print("Nombre no reconocido.")
 
-    segunda_vuelta = input("¿Desea ingresar notas para otro alumno?\n's' = sí\nOtra tecla = no\n> ")
-    if segunda_vuelta.lower() != "s":
+    segunda_vuelta = input("¿Desea ingresar notas para otro alumno?\n's' = sí\ntecla = no\n> ")
+    if segunda:
         break
 
 
@@ -436,9 +438,11 @@ def menu() -> int:
             case "1":
                 print("opción 1 asdasdad")
             case "2":
-                print("opción 2")
+                mostrar = mostrar_datos(matriz_notas,generos,nombres,legajos)
+                print(mostrar)
             case "3":
-                print("opción 3")
+                promedios_filas = promedios_alumnos(matriz_notas)
+                print(promedios_filas)
             case "4":
                 print("opción 4")
             case "5":
@@ -476,7 +480,7 @@ def promedios_alumnos(matriz_magna:list)->list:
             contador_a +=1 #siempre va a dar 5 
             
         promedio = suma_de_numeros / contador_a #guardo el numero en "promedio"
-        promedios_guardados += [promedio] #lo sumo a la lista, para evitar que sobreescriba los resultados
+        promedios_guardados += [promedio] #lo sumo a la lista, en formato lista, para evitar que sobreescriba los resultados
             
    
     return promedios_guardados
@@ -538,13 +542,14 @@ print(lista_promedios)
 
 # averigua el numero mayor en listas
 def el_mayor_en_listas(lista:list)-> list:
-    numero_mayor = lista[0] 
+    numero_mayor = [0] 
     for i in range(0, len(lista)-1, 1):  
         for j in range(i + 1, len(lista), 1):
             if lista[i] > lista[j]:
-                numero_mayor = lista[i]
+                numero_mayor =+ lista[i]
 
     return numero_mayor
 
 llamar = el_mayor_en_listas(lista_promedios)
-print(llamar)
+print(f"promedio mayor = {llamar}")
+
