@@ -1,0 +1,93 @@
+#hoja_de_trabajo_parcial
+import pygame as pg
+import pygame.mixer as mixer 
+from Funciones_del_juego import *
+
+
+#configuraciones varias
+pg.init()
+pg.mixer.init()
+
+
+reloj = pg.time.Clock()
+
+#sonido de fondo
+mixer.music.load("C:/Users/Kaio/Documents/parcial2_archivos/musica1.mp3") 
+mixer.music.set_volume(0.6)
+mixer.music.play(-1)
+
+
+#pantalla 
+pantalla = pg.display.set_mode((800,600))
+azul = (0,0,150)
+imagen_cargada = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo.jpeg")
+correccion_tamaño = pg.transform.scale(imagen_cargada, (800,600)) #esto corrige el tamaño del fondo 
+
+foto1 = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/dificultad.png")
+jugarimagen = pg.transform.scale(foto1,(250,50))
+
+#botones de inicio
+
+nivel = pg.Surface((290,50))
+nivel.fill((100,100,100))
+boton1 = nivel.get_rect(topleft =(290,50))
+
+jugar = pg.Surface((290,50))
+jugar.fill((200,0,0))
+boton2 = jugar.get_rect(topleft = (250,150))
+
+boton_puntaje = pg.Surface((290,50))
+boton_puntaje.fill((0,0,0))
+boton3 = boton_puntaje.get_rect(topleft = (250,250))
+ 
+boton_salida = pg.Surface((290,50))
+boton_salida.fill((0,150,0))
+boton4 = boton_salida.get_rect(topleft = (250,350))
+
+
+
+
+#bucle principal 
+while True:
+    reloj.tick(60)
+    for evento in pg.event.get():
+        if evento.type == pg.QUIT:
+            pg.quit()
+            quit()
+    
+        elif evento.type == pg.MOUSEBUTTONDOWN: 
+            posicion = (evento.pos)
+            print(f"{posicion}")
+
+            if evento.type == pg.MOUSEBUTTONDOWN:
+                if evento.button ==1:
+                        print("click izquierdo funciona")
+
+                if boton1.collidepoint(posicion):
+                    print("click en el rectángulo 1 correcto")
+                elif boton2.collidepoint(posicion):
+                    print("click en RECTANGULO2 correcto")
+                elif boton3.collidepoint(posicion):
+                    print("click en RECTA 3 CORRECTO")
+                elif boton4.collidepoint(posicion):
+                    print("CLICK EN EL 4 FUNCIONA")
+                
+                
+
+                elif evento.button ==3:
+                        print("click derecho funciona")
+
+        if evento.type == pg.MOUSEBUTTONUP:
+            print("se solto el click")
+
+        
+
+
+    
+    pantalla.blit(correccion_tamaño,(0, 0))       
+    pantalla.blit(jugar,(250,50))
+    pantalla.blit(boton_puntaje,(250,150))
+    pantalla.blit(nivel,(250,250))
+    pantalla.blit(boton_salida,(250,350 ))
+
+    pg.display.flip()
