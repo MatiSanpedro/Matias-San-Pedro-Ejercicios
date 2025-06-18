@@ -1,0 +1,76 @@
+#Funciones_del_juego
+import pygame as pg
+import time
+import random
+
+#matrices 
+
+def matriz_de_10x10():
+    matriz_final = []
+    for i in range(10):
+        fila = [0] *10
+        matriz_final.append(fila)
+        
+        
+        
+    return matriz_final
+    
+
+def matriz_de_20x20():
+    matriz_final = []
+    for i in range(20):
+        fila = [0] *20
+        matriz_final.append(fila)
+        
+        
+        
+    return matriz_final
+
+
+
+def matriz_de_40x40():
+    matriz_final = []
+    for i in range(40):
+        fila = [0]  *40
+        matriz_final.append(fila)
+        
+        
+        
+    return matriz_final
+
+#Colocar naves en matriz al azar:
+
+def cero_uno(matriz):
+    for i in range(0,40,2):
+        fila = random.randint(0,9)
+        columna = random.randint(0,9)
+
+        matriz[fila][columna] = 1
+
+    return matriz 
+
+
+
+#escenario 
+def dibujar_escenario_10():
+    tamaño = 50
+    columna = 10
+    fila = 10
+    pantalla = pg.display.set_mode((800,600))
+
+    for filass in range(fila):
+        for columnass in range(columna):
+            rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
+            pg.draw.rect(pantalla, (0,0,200), rectangulo)
+            pg.draw.rect(pantalla, (0,0,0), rectangulo, 1)
+
+
+
+
+'''
+matriz_creada = matriz_de_10x10()
+efe = cero_uno(matriz_creada)
+print(efe)
+'''
+
+
