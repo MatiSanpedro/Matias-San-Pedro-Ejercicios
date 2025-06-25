@@ -10,7 +10,8 @@ def matriz_de_10x10():
     for i in range(10):
         fila = [0] *10
         matriz_final.append(fila)
-        
+    
+    
         
         
     return matriz_final
@@ -38,10 +39,10 @@ def matriz_de_40x40():
         
     return matriz_final
 
-#Colocar naves en matriz al azar:
+#Colocar naves en matriz al azar(requiere matriz):
 
 def cero_uno(matriz):
-    for i in range(0,40,2):
+    for i in range(20):
         fila = random.randint(0,9)
         columna = random.randint(0,9)
 
@@ -52,17 +53,26 @@ def cero_uno(matriz):
 
 
 #escenario 
-def dibujar_escenario_10():
-    tamaño = 50
-    columna = 10
-    fila = 10
-    pantalla = pg.display.set_mode((800,600))
+
+def dibujar_escenario(pantalla, tamaño:int,columna:int,fila:int):
 
     for filass in range(fila):
         for columnass in range(columna):
             rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
             pg.draw.rect(pantalla, (0,0,200), rectangulo)
             pg.draw.rect(pantalla, (0,0,0), rectangulo, 1)
+            
+
+#dibujar los barcos (requiere la matriz)
+
+def dibujar_barcos(pantalla,matriz:list,tamaño):
+    for filass in range(len(matriz)):
+        for columnass in range(len(matriz[0])):
+            
+            if matriz[filass][columnass] == 1:
+                rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
+                pg.draw.rect(pantalla,(60,0,0),rectangulo)
+                
 
 
 
@@ -74,3 +84,82 @@ print(efe)
 '''
 
 
+def mostrar_menu(pantalla):
+    pantalla.fill((50,50,50))
+    fuente = pg.font.SysFont("Arial",50)
+    texto = fuente.render("HACE CLICK PARA JUGAR",True, (255,255,255))
+    pantalla.blit(texto, (100,200))
+
+    for evento in pg.event.get():
+        if evento.type ==pg.QUIT:
+            return "salir"
+        #if evento.type == pg.MOUSEBUTTONDOWN:
+         #   return "juego"
+    
+    return "menu"
+
+
+def mostrar_juego(pantalla):
+    pantalla.fill((0,100,200))
+    
+
+    for evento in pg.event.get():
+        if evento.type == pg.QUIT:
+            return "salir"
+        
+    return "juego"
+
+def funcion_teclado():
+    for evento in pg.event.get():
+        if evento.type == pg.KEYDOWN:
+            if evento.type == pg.K_ESCAPE:
+                print("se apretó esc")
+        elif evento.type == pg.K_p:
+                pg.mixer.music.pause()
+        elif evento.type == pg.K_m:
+                pg.mixer.music.stop()
+        if evento.type == pg.KEYUP:
+            print("se ha levantao la tecla")
+        
+
+
+
+
+
+
+def funcion_mouse():
+    for evento in pg.event.get():
+        
+        if evento.type == pg.QUIT:
+            pg.quit()
+            quit()
+        
+        elif evento.type == pg.MOUSEBUTTONDOWN: 
+            posicion = (evento.pos)
+            print(f"{posicion}")
+
+            if evento.type == pg.MOUSEBUTTONDOWN:
+                if evento.button ==1:
+                    print("click izquierdo funciona")
+
+                if boton1.collidepoint(posicion):
+                    print("EL BOTON 1 FUNCIONA")
+
+
+                elif boton2.collidepoint(posicion):
+                    print("click en RECTANGULO2 correcto")
+                    
+                elif boton3.collidepoint(posicion):
+                    print("click en RECTAngulo 3 CORRECTO")
+
+                elif boton4.collidepoint(posicion):
+                    pg.quit()
+                    quit()
+                
+                
+
+                elif evento.button ==3:
+                        print("click derecho funciona")
+
+        if evento.type == pg.MOUSEBUTTONUP:
+            print("se solto el click")
