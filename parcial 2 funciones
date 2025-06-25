@@ -109,57 +109,68 @@ def mostrar_juego(pantalla):
         
     return "juego"
 
-def funcion_teclado():
-    for evento in pg.event.get():
+
+def funcion_teclado(evento):
         if evento.type == pg.KEYDOWN:
-            if evento.type == pg.K_ESCAPE:
+            if evento.key == pg.K_ESCAPE:
                 print("se apretó esc")
-        elif evento.type == pg.K_p:
+            elif evento.key == pg.K_p:
                 pg.mixer.music.pause()
-        elif evento.type == pg.K_m:
+            elif evento.key == pg.K_m:
                 pg.mixer.music.stop()
         if evento.type == pg.KEYUP:
             print("se ha levantao la tecla")
         
 
 
-
-
-
-
-def funcion_mouse():
-    for evento in pg.event.get():
+def funcion_mouse(evento,boton1,boton2,boton3,boton4):
         
-        if evento.type == pg.QUIT:
-            pg.quit()
-            quit()
-        
-        elif evento.type == pg.MOUSEBUTTONDOWN: 
+        if evento.type == pg.MOUSEBUTTONDOWN: 
             posicion = (evento.pos)
             print(f"{posicion}")
 
-            if evento.type == pg.MOUSEBUTTONDOWN:
-                if evento.button ==1:
-                    print("click izquierdo funciona")
+        
+            if evento.button ==1:
+                print("click izquierdo funciona")
 
-                if boton1.collidepoint(posicion):
-                    print("EL BOTON 1 FUNCIONA")
+            if boton1.collidepoint(posicion):
+                print("EL BOTON 1 FUNCIONA")
 
 
-                elif boton2.collidepoint(posicion):
-                    print("click en RECTANGULO2 correcto")
-                    
-                elif boton3.collidepoint(posicion):
-                    print("click en RECTAngulo 3 CORRECTO")
+            elif boton2.collidepoint(posicion):
+                print("click en RECTANGULO2 correcto")
+                
+            elif boton3.collidepoint(posicion):
+                print("click en RECTAngulo 3 CORRECTO")
 
-                elif boton4.collidepoint(posicion):
-                    pg.quit()
-                    quit()
+            elif boton4.collidepoint(posicion):
+                pg.quit()
+                quit()
                 
                 
 
-                elif evento.button ==3:
-                        print("click derecho funciona")
+            elif evento.button ==3:
+                    print("click derecho funciona")
 
         if evento.type == pg.MOUSEBUTTONUP:
             print("se solto el click")
+
+
+
+
+
+   #pausa - despausa de musica, analizar esto y aplicarlo, no copiar-pegar
+
+    pausado = False
+
+for evento in pg.event.get():
+    if evento.type == pg.KEYDOWN:
+        if evento.key == pg.K_p:
+            if not pausado:
+                pg.mixer.music.pause()
+                pausado = True
+                print("Música pausada")
+            else:
+                pg.mixer.music.unpause()
+                pausado = False
+                print("Música reanudada")
