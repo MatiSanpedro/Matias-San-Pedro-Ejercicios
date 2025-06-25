@@ -28,49 +28,67 @@ jugarimagen = pg.transform.scale(foto1,(250,50))
 
 #botones de inicio
 
+#Nivel | boton 1
 nivel = pg.Surface((290,50))
 nivel.fill((100,100,100))
-boton1 = nivel.get_rect(topleft =(290,50))
+fuente = pg.font.SysFont("Bernard MT Comprimida",50)
+texto = fuente.render("Nivel",True, (250,250,250))
+boton1 = nivel.get_rect(topleft = (290,50))
 
+#jugar | boton 2 
 jugar = pg.Surface((290,50))
 jugar.fill((200,0,0))
+texto_2 = fuente.render("Jugar",True,(250,250,250))
 boton2 = jugar.get_rect(topleft = (250,150))
 
+#puntaje | boton 3 
 boton_puntaje = pg.Surface((290,50))
 boton_puntaje.fill((0,0,0))
+texto_3 = fuente.render("Ver Puntaje",True,(250,250,250))
 boton3 = boton_puntaje.get_rect(topleft = (250,250))
- 
+
+#salir | boton 4 
 boton_salida = pg.Surface((290,50))
 boton_salida.fill((0,150,0))
+texto_4 = fuente.render("Salir",True,(250,250,250))
 boton4 = boton_salida.get_rect(topleft = (250,350))
 
 
-
+#escenario
+tamaño1 = 50
+fila1 = 10
+columna1 = 10
 
 #bucle principal 
 while True:
     reloj.tick(60)
     for evento in pg.event.get():
+        
         if evento.type == pg.QUIT:
             pg.quit()
             quit()
-    
+        
         elif evento.type == pg.MOUSEBUTTONDOWN: 
             posicion = (evento.pos)
             print(f"{posicion}")
 
             if evento.type == pg.MOUSEBUTTONDOWN:
                 if evento.button ==1:
-                        print("click izquierdo funciona")
+                    print("click izquierdo funciona")
 
                 if boton1.collidepoint(posicion):
-                    print("click en el rectángulo 1 correcto")
+                    print("EL BOTON 1 FUNCIONA")
+
+
                 elif boton2.collidepoint(posicion):
                     print("click en RECTANGULO2 correcto")
+                    
                 elif boton3.collidepoint(posicion):
-                    print("click en RECTA 3 CORRECTO")
+                    print("click en RECTAngulo 3 CORRECTO")
+
                 elif boton4.collidepoint(posicion):
-                    print("CLICK EN EL 4 FUNCIONA")
+                    pg.quit()
+                    quit()
                 
                 
 
@@ -79,15 +97,21 @@ while True:
 
         if evento.type == pg.MOUSEBUTTONUP:
             print("se solto el click")
-
-        
+    
 
 
     
-    pantalla.blit(correccion_tamaño,(0, 0))       
-    pantalla.blit(jugar,(250,50))
-    pantalla.blit(boton_puntaje,(250,150))
-    pantalla.blit(nivel,(250,250))
-    pantalla.blit(boton_salida,(250,350 ))
+   
+    pantalla.blit(correccion_tamaño,(0, 0)) 
+    pantalla.blit(jugar,(250,50)) #rectangulo de boton 1 
+    pantalla.blit(texto,(250,50)) #texto de rectangulo1
+    pantalla.blit(boton_puntaje,(250,150)) #rectangulo de boton 2
+    pantalla.blit(texto_2,(250,150)) #texto de 3
+    pantalla.blit(nivel,(250,250)) #rectangulo de boton 3
+    pantalla.blit(texto_3,(250,250)) #texto de rectangulo 2        
+    pantalla.blit(boton_salida,(250,350 ))#cuadrado 4 
+    pantalla.blit(texto_4,(250,350)) #texto de boton 4 
+
+
 
     pg.display.flip()
