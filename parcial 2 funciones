@@ -41,14 +41,70 @@ def matriz_de_40x40():
 
 #Colocar naves en matriz al azar(requiere matriz):
 
-def cero_uno(matriz):
+def cero_uno_matriz_de_10(matriz):
     for i in range(20):
         fila = random.randint(0,9)
         columna = random.randint(0,9)
 
-        matriz[fila][columna] = 1
+        largo = random.choice([1,2,3])
+        
+        if columna + largo <= 10: #no quiero que la matriz se agrande mas de 10
+            for j in range(largo):
+                matriz[fila][columna + j] = 1
+
 
     return matriz 
+
+
+
+
+def colocar_barcos(matriz): #coloca conjuntos de 1 en la matriz 
+
+    conjuntos = [
+        (1, 4),  #1 grupo de largo 4 (acorazado)
+        (2, 3),  #2 grupos de largo 3 (cruceros)
+        (3, 2),  #3 grupos de largo 2 (destructores)
+        (4, 1),  #4 grupos individuales (submarino)
+    
+    ]
+
+
+    for cantidad, largo in conjuntos:
+        for i in range(cantidad):
+           # print(f"\nIntentando colocar el grupo {i+1} de largo {largo}")
+            colocado = False
+            intentos = 0
+
+            while not colocado and intentos < 50:
+                fila = random.randint(0, 9)
+                columna = random.randint(0, 10 - largo)
+ 
+                # Verificamos si hay espacio libre
+                espacio_disponible = True
+                for j in range(largo):
+                    if matriz[fila][columna + j] != 0:
+                       # print(f"Espacio ocupado en [{fila}][{columna + j}]")
+                        espacio_disponible = False
+                        break
+
+                # Si hay espacio, colocamos los 1
+                if espacio_disponible:
+                    for j in range(largo):
+                        matriz[fila][columna + j] = 1
+                   # print(f" Grupo colocado en fila {fila}, columnas {columna} a {columna + largo - 1}")
+                    colocado = True
+
+                intentos += 1
+
+            if not colocado:
+                print(f"⚠️ No se pudo colocar el grupo de tamaño {largo} tras 100 intentos.")
+
+    return matriz
+
+
+matriz = matriz_de_10x10()
+barquito = colocar_barcos(matriz)
+print(barquito)
 
 
 
@@ -147,7 +203,6 @@ def funcion_mouse(evento,boton1,boton2,boton3,boton4):
                 pg.quit()
                 quit()
                 
-                
 
             elif evento.button ==3:
                     print("click derecho funciona")
@@ -156,21 +211,15 @@ def funcion_mouse(evento,boton1,boton2,boton3,boton4):
             print("se solto el click")
 
 
-
-
-
-   #pausa - despausa de musica, analizar esto y aplicarlo, no copiar-pegar
-
-    pausado = False
-
-for evento in pg.event.get():
+def pausar_despausar(evento):
     if evento.type == pg.KEYDOWN:
-        if evento.key == pg.K_p:
-            if not pausado:
-                pg.mixer.music.pause()
-                pausado = True
-                print("Música pausada")
-            else:
-                pg.mixer.music.unpause()
-                pausado = False
-                print("Música reanudada")
+        if evento.key == pg.K_p: # P = pausa 
+            pg.mixer.music.pause()
+            print("sonido pausado")
+        if evento.key == pg.K_o: #O = despausa
+            pg.mixer.music.unpause()
+            print("Sonido reanudado")
+
+        
+        
+
