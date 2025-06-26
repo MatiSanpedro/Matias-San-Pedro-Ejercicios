@@ -23,8 +23,8 @@ azul = (0,0,150)
 imagen_cargada = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo.jpeg")
 correccion_tamaño = pg.transform.scale(imagen_cargada, (800,600)) #esto corrige el tamaño del fondo 
 
-foto1 = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/dificultad.png")
-jugarimagen = pg.transform.scale(foto1,(250,50))
+#foto1 = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/dificultad.png")
+#jugarimagen = pg.transform.scale(foto1,(250,50))
 
 #botones de inicio
 
@@ -68,8 +68,9 @@ while True:
             quit()
 
         funcion_teclado(evento)
+        pausar_despausar(evento)
         funcion_mouse(evento,boton1,boton2,boton3,boton4)
-
+        
     
    
     pantalla.blit(correccion_tamaño,(0, 0)) 
