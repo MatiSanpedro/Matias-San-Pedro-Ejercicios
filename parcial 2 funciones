@@ -84,14 +84,14 @@ def barcos_de_matriz_10(matriz)-> list:
                     espacio_libre = True 
                     for j in range(largo):
                         if matriz[fila][columna + j] != 0: #reviso que exista espacio 
-                        # print(f"Espacio ocupado en [{fila}][{columna + j}]")
-                            espacio_libre = False
+                        
+                            espacio_libre = False 
                             break
                     
-                    if espacio_libre:
+                    if espacio_libre == True:
                         for j in range(largo):
                             matriz[fila][columna + j] = 1
-                    # print(f" Grupo colocado en fila {fila}, columnas {columna} a {columna + largo - 1}")
+                    
                         colocado = True
 
                     intentos += 1
@@ -217,3 +217,39 @@ def pausar_despausar(evento):
 
         
         
+#esto controla las diferentes pantallas dentro del bucle 
+
+
+def controlador_de_pantallas(pantalla_actual):
+    match pantalla_actual:
+        case "Nivel":
+            pantalla = pg.display.set_mode((800,600))
+            azul = (0,0,150)
+            imagen_cargada = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo_nivel.jpg")
+            correccion_tamaño = pg.transform.scale(imagen_cargada, (800,600))
+            
+            
+            #modificar esto ya mismo 
+            nivel_nivel = pg.Surface((290,50))
+            nivel_nivel.fill((100,100,100))
+            fuente = pg.font.SysFont("Bernard MT Comprimida",50)
+            texto = fuente.render("Nivel",True, (250,250,250))
+            boton1_nivel = nivel_nivel.get_rect(topleft = (290,50))
+            
+            
+            
+            
+            pantalla.blit(correccion_tamaño,(0, 0)) 
+
+
+            
+
+
+
+
+        case "Jugar":
+            pass
+        case "puntaje":
+            pass
+        case "pantalla de opciones":
+            pass
