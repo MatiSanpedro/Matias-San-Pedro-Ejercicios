@@ -61,11 +61,12 @@ def cero_uno_matriz_de_10(matriz):
 def barcos_de_matriz_10(matriz)-> list:
 
     #REFORMA DEL CODIGO DE BARCOS, USAR ESTE
+
     unos = [
             (1, 4),  #1 grupo de largo 4 (acorazado)
             (2, 3),  #2 grupos de largo 3 (cruceros)
             (3, 2),  #3 grupos de largo 2 (destructores)
-            (4, 1),  #4 grupos individuales (submarino)
+            (4, 1),  #4 uno solo (submarino)
         
         ]
 
@@ -97,7 +98,7 @@ def barcos_de_matriz_10(matriz)-> list:
                     intentos += 1
 
             if not colocado:
-                    print(f" No se pudo colocar el grupo de tamaño {largo}.")
+                    print(f" No se pudo colocar el ultimo {largo}")
                     
     
     return matriz
@@ -115,8 +116,12 @@ def dibujar_escenario(pantalla, tamaño:int,columna:int,fila:int):
             
 
 #dibujar los barcos (requiere la matriz)
+#esto ademas de dibujarlos en pantalla, devuelve los rectangulos que dibuje en una lista 
 
 def dibujar_barcos(pantalla,matriz:list,tamaño):
+
+    lista_de_barcos = []
+
     for filass in range(len(matriz)):
         for columnass in range(len(matriz[0])):
             
@@ -124,6 +129,10 @@ def dibujar_barcos(pantalla,matriz:list,tamaño):
                 rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
                 pg.draw.rect(pantalla,(60,0,0),rectangulo)
                 
+                lista_de_barcos.append(rectangulo)
+
+            
+    return lista_de_barcos
 
 
 
@@ -169,12 +178,23 @@ def funcion_teclado(evento):
                 pg.mixer.music.pause()
             elif evento.key == pg.K_m:
                 pg.mixer.music.stop()
+            
+
         if evento.type == pg.KEYUP:
             print("se ha levantao la tecla")
         
 
+#REINICIAR | requiere que le pase "evento" y "bandera_barcos"
+def reiniciar_partida(evento,booleano): 
+    if evento.type == pg.KEYDOWN and evento.key ==pg.K_r:
+            booleano = False
+    
+    
+    return booleano 
 
-def funcion_mouse(evento,boton1,boton2,boton3,boton4):
+
+
+def funcion_mouse_menu(evento,boton1,boton2,boton3,boton4,pantalla_actual):
         
         if evento.type == pg.MOUSEBUTTONDOWN: 
             posicion = (evento.pos)
@@ -184,9 +204,8 @@ def funcion_mouse(evento,boton1,boton2,boton3,boton4):
             if evento.button ==1:
                 print("click izquierdo funciona")
 
-            if boton1.collidepoint(posicion):
-                print("EL BOTON 1 FUNCIONA")
-
+            if boton1.collidepoint(posicion):                
+                pantalla_actual = "nivel"
 
             elif boton2.collidepoint(posicion):
                 print("click en RECTANGULO2 correcto")
@@ -205,6 +224,8 @@ def funcion_mouse(evento,boton1,boton2,boton3,boton4):
         if evento.type == pg.MOUSEBUTTONUP:
             print("se solto el click")
 
+       
+
 
 def pausar_despausar(evento):
     if evento.type == pg.KEYDOWN:
@@ -217,39 +238,29 @@ def pausar_despausar(evento):
 
         
         
-#esto controla las diferentes pantallas dentro del bucle 
 
+       
+def funcion_mouse_nivel(evento,boton1_nivel,boton2_nivel,boton3_nivel):
+    if evento.type == pg.MOUSEBUTTONDOWN: 
+            posicion = (evento.pos)
+            print(f"{posicion}")
 
-def controlador_de_pantallas(pantalla_actual):
-    match pantalla_actual:
-        case "Nivel":
-            pantalla = pg.display.set_mode((800,600))
-            azul = (0,0,150)
-            imagen_cargada = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo_nivel.jpg")
-            correccion_tamaño = pg.transform.scale(imagen_cargada, (800,600))
-            
-            
-            #modificar esto ya mismo 
-            nivel_nivel = pg.Surface((290,50))
-            nivel_nivel.fill((100,100,100))
-            fuente = pg.font.SysFont("Bernard MT Comprimida",50)
-            texto = fuente.render("Nivel",True, (250,250,250))
-            boton1_nivel = nivel_nivel.get_rect(topleft = (290,50))
-            
-            
-            
-            
-            pantalla.blit(correccion_tamaño,(0, 0)) 
+        
+            if evento.button ==1:
+                print("click izquierdo funciona")
 
+            if boton1_nivel.collidepoint(posicion):                
+                print("click en rectangulo 1 correcto")
 
-            
+            elif boton2_nivel.collidepoint(posicion):
+                print("click en RECTANGULO2 correcto")
+                
+            elif boton3_nivel.collidepoint(posicion):
+                print("click en RECTAngulo 3 CORRECTO")
+                
 
+            elif evento.button ==3:
+                    print("click derecho funciona")
 
-
-
-        case "Jugar":
-            pass
-        case "puntaje":
-            pass
-        case "pantalla de opciones":
-            pass
+            if evento.type == pg.MOUSEBUTTONUP:
+                print("se solto el click")
