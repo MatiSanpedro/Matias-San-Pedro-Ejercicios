@@ -21,12 +21,11 @@ mixer.music.play(-1)
 pantalla = pg.display.set_mode((800,600))
 azul = (0,0,150)
 imagen_cargada = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo.jpeg")
-correccion_tamaño = pg.transform.scale(imagen_cargada, (800,600)) #esto corrige el tamaño del fondo 
+correccion_tamaño_menu = pg.transform.scale(imagen_cargada, (800,600)) #esto corrige el tamaño del fondo 
 
-#foto1 = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/dificultad.png")
-#jugarimagen = pg.transform.scale(foto1,(250,50))
+pantalla_actual = "inicio" #con esto controlo los cambios de pantalla dentro del match 
 
-#botones de inicio
+#botones de pantalla de opciones
 
 #Nivel | boton 1
 nivel = pg.Surface((290,50))
@@ -47,6 +46,7 @@ boton_puntaje.fill((0,0,0))
 texto_3 = fuente.render("Ver Puntaje",True,(250,250,250))
 boton3 = boton_puntaje.get_rect(topleft = (250,250))
 
+
 #salir | boton 4 
 boton_salida = pg.Surface((290,50))
 boton_salida.fill((0,150,0))
@@ -54,10 +54,66 @@ texto_4 = fuente.render("Salir",True,(250,250,250))
 boton4 = boton_salida.get_rect(topleft = (250,350))
 
 
-#escenario
+#variables para crear los escenarios
+
+#10x10:
 tamaño1 = 50
 fila1 = 10
 columna1 = 10
+
+
+######################
+
+#botones de "seleccionar nivel"
+
+imagen_fondo_nivel = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/fondo_nivel.jpg")
+correccion_tamaño_nivel = pg.transform.scale(imagen_fondo_nivel, (800,600))
+
+#facil | boton 1
+nivel_nivel = pg.Surface((290,50))
+nivel_nivel.fill((200,100,100))
+fuente = pg.font.SysFont("Bernard MT Comprimida",50)
+texto_facil = fuente.render("facil",True, (250,250,250))
+boton1_nivel = nivel_nivel.get_rect(topleft = (290,50))
+
+#medio | boton 2 
+medio = pg.Surface((290,50))
+medio.fill((50,0,0))
+texto_medio = fuente.render("Medio",True,(250,250,250))
+boton2_nivel = medio.get_rect(topleft = (250,150))
+
+#Dificil | boton 3 
+dificil = pg.Surface((290,50))
+dificil.fill((0,0,0))
+texto_dificil = fuente.render("Dificil",True,(250,250,250))
+boton3_nivel = dificil.get_rect(topleft = (250,250))
+
+
+#volver| boton 4 
+volver = pg.Surface((290,50))
+volver.fill((150,0,0))
+texto_4_nivel = fuente.render("Volver",True,(250,250,250))
+boton4_nivel = volver.get_rect(topleft = (250,350)) 
+
+#######################
+
+#botones y variables de "jugar":
+
+# pantalla 
+imagen_fondo_jugar = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/oceano.jpg")
+correccion_tamaño_jugar = pg.transform.scale(imagen_fondo_jugar,(800,600))
+
+#barcos
+
+
+'''
+bandera_barcos = False
+matriz_10 = matriz_de_10x10()
+lista_barcos_generados = barcos_de_matriz_10(matriz_10)
+matriz_vacia_10 = []
+#reinicio = reiniciar_partida(evento,bandera_barcos)
+'''
+
 
 #bucle principal 
 while True:
@@ -67,22 +123,145 @@ while True:
             pg.quit()
             quit()
 
+        match pantalla_actual:
+
+            case "inicio": #los blits van incluidos en cada "case" 
+               
+                pantalla.blit(correccion_tamaño_menu,(0, 0)) 
+
+                pantalla.blit(jugar,(250,50)) #rectangulo de boton 1 
+                pantalla.blit(texto,(250,50)) #texto de rectangulo1
+                pantalla.blit(boton_puntaje,(250,150)) #rectangulo de boton 2
+                pantalla.blit(texto_2,(250,150)) #texto de 3
+                pantalla.blit(nivel,(250,250)) #rectangulo de boton 3
+                pantalla.blit(texto_3,(250,250)) #texto de rectangulo 2        
+                pantalla.blit(boton_salida,(250,350 ))#cuadrado 4 
+                pantalla.blit(texto_4,(250,350)) #texto de boton 4
+                
+                if evento.type == pg.MOUSEBUTTONDOWN: 
+                    posicion = (evento.pos)
+                    #print(f"{posicion}")
+
+                    if evento.button ==1:
+                        print("click izquierdo funciona")
+
+                    if boton1.collidepoint(posicion):                
+                        pantalla_actual = "nivel"
+
+                    elif boton2.collidepoint(posicion):
+                        pantalla_actual = "jugar"
+                        
+                    elif boton3.collidepoint(posicion):
+                        pantalla_actual = "ver puntaje"
+
+                    elif boton4.collidepoint(posicion):
+                        pg.quit()
+                        quit()
+                        
+
+                    elif evento.button ==3:
+                            print("click derecho funciona")
+
+                    if evento.type == pg.MOUSEBUTTONUP:
+                        print("se solto el click")
+                
+
+
+
+            case "nivel": 
+
+                pantalla.blit(correccion_tamaño_nivel,(0, 0))  #corrector de tamaño de fondo
+                pantalla.blit(nivel_nivel ,(250,50)) #rectangulo 1
+                pantalla.blit(texto_facil,(250,50)) #texto 1 
+
+                pantalla.blit(medio,(250,150)) #rectangulo 2 
+                pantalla.blit(texto_medio ,(250,150)) #texto 2 
+
+                pantalla.blit(dificil,(250,250)) #rectangulo 3 
+                pantalla.blit(texto_dificil,(250,250)) #texto 3
+
+                pantalla.blit(volver, (250, 350)) #rectangulo volver
+                pantalla.blit(texto_4_nivel,(250,350)) #texto volver
+
+                if evento.type == pg.MOUSEBUTTONDOWN: 
+                    posicion = (evento.pos)
+                    print(f"{posicion}")
+
+                    if evento.button ==1:
+                        print("click izquierdo funciona")
+
+                    if boton1_nivel.collidepoint(posicion):         
+                        print("rectangulo 1 FUNCIONA")
+
+                    elif boton2_nivel.collidepoint(posicion):
+                        print("click en RECTANGULO2 correcto")
+                        
+                    elif boton3_nivel.collidepoint(posicion):
+                        print("click en RECTAngulo 3 CORRECTO")
+                    
+                    elif boton4_nivel.collidepoint(posicion):
+                        print("click en rectangulo 4 CORRECTO")
+                        pantalla_actual = "inicio"
+                        print("click en rectangulo VOLVER correcto")
+
+                    elif evento.button ==3:
+                            print("click derecho funciona")
+
+                if evento.type == pg.MOUSEBUTTONUP:
+                    print("se solto el click")
+
+
+            
+            case "jugar":
+                bandera_barcos = False
+                pantalla.blit(correccion_tamaño_jugar,(0,0))
+                
+                if bandera_barcos == False:
+                    matriz_10 = matriz_de_10x10()
+                    dibujar_escenario(pantalla,tamaño1,columna1,fila1)
+                    lista_barcos_10 = dibujar_barcos(pantalla,matriz_10,tamaño1) 
+                    bandera_barcos = True
+
+                    reiniciar_partida(evento,bandera_barcos)
+
+
+                if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
+                    for rectangulancio in lista_barcos_10:
+                        if rectangulancio.collidepoint(evento.pos):
+                            print("la colision con barcos funciona")
+
+
+
+
+
+
+                # faltan eventos propios
+
+                #desarrollar una funcion mouse que sea general y no tenga sida
+                #modificar la funcion "dibujar escenario para que tenga indices con numero y letra"
+                #ver si pueden dibujarse los barcos que aun no llegue a eso
+                
+
+
+
+
+            case "puntaje": #la funcion puntaje va vinculada con los eventos propios y las interacciones de jugar
+                pass   
+
+
         funcion_teclado(evento)
         pausar_despausar(evento)
-        funcion_mouse(evento,boton1,boton2,boton3,boton4)
         
-    
+        
+
    
-    pantalla.blit(correccion_tamaño,(0, 0)) 
-    pantalla.blit(jugar,(250,50)) #rectangulo de boton 1 
-    pantalla.blit(texto,(250,50)) #texto de rectangulo1
-    pantalla.blit(boton_puntaje,(250,150)) #rectangulo de boton 2
-    pantalla.blit(texto_2,(250,150)) #texto de 3
-    pantalla.blit(nivel,(250,250)) #rectangulo de boton 3
-    pantalla.blit(texto_3,(250,250)) #texto de rectangulo 2        
-    pantalla.blit(boton_salida,(250,350 ))#cuadrado 4 
-    pantalla.blit(texto_4,(250,350)) #texto de boton 4 
+     
 
 
 
     pg.display.flip()
+
+'''
+
+
+                        '''
