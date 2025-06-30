@@ -110,9 +110,9 @@ def dibujar_escenario(pantalla, tamaño:int,columna:int,fila:int):
 
     for filass in range(fila):
         for columnass in range(columna):
-            rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
-            pg.draw.rect(pantalla, (0,0,200), rectangulo)
-            pg.draw.rect(pantalla, (0,0,0), rectangulo, 1)
+            rectangulo_agua = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
+            pg.draw.rect(pantalla, (0,0,200), rectangulo_agua)
+            pg.draw.rect(pantalla, (0,0,0), rectangulo_agua, 1)
             
 
 #dibujar los barcos (requiere la matriz)
@@ -128,6 +128,7 @@ def dibujar_barcos(pantalla,matriz:list,tamaño):
             if matriz[filass][columnass] == 1:
                 rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
                 pg.draw.rect(pantalla,(60,0,0),rectangulo)
+                pg.draw.rect(pantalla, (0, 0, 0), rectangulo, 1)
                 
                 lista_de_barcos.append(rectangulo)
 
@@ -187,7 +188,7 @@ def funcion_teclado(evento):
 #REINICIAR | requiere que le pase "evento" y "bandera_barcos"
 def reiniciar_partida(evento,booleano): 
     if evento.type == pg.KEYDOWN and evento.key ==pg.K_r:
-            booleano = False
+        booleano = False
     
     
     return booleano 
