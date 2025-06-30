@@ -45,6 +45,7 @@ boton_puntaje = pg.Surface((290,50))
 boton_puntaje.fill((0,0,0))
 texto_3 = fuente.render("Ver Puntaje",True,(250,250,250))
 boton3 = boton_puntaje.get_rect(topleft = (250,250))
+modo_dificultad = "facil"
 
 
 #salir | boton 4 
@@ -110,10 +111,13 @@ lista_barcos_generados = barcos_de_matriz_10(matriz_10)
 
 #disparos 
 
-disparos_realizados = []
+disparos_realizados = [] #aca guardo los disparos para detectar si se repite el mismo dentro de un solo cuadrado 
 disparo_agua = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/pyxeldraw/perdida_agua.png")
-correccion_disparo_agua = pg.transform.scale(disparo_agua, (50,50))
-
+disparo_fuego = pg.image.load("C:/users/Kaio/Documents/parcial2_archivos/fuegocopia.jpg")
+correccion_fuego = pg.transform.scale(disparo_fuego, (50,50)) #fuego correccion
+correccion_disparo_agua = pg.transform.scale(disparo_agua, (50,50)) #agua correccion
+disparos_agua = [] #aca guardo las coordenadas de los disparos hechos en el agua 
+disparos_acertados = [] #aca guardo los disparos que si aciertan 
 
 
 
@@ -195,13 +199,13 @@ while True:
                         print("click izquierdo funciona")
 
                     if boton1_nivel.collidepoint(posicion):         
-                        print("rectangulo 1 FUNCIONA")
+                        modo_dificultad = "facil"
 
                     elif boton2_nivel.collidepoint(posicion):
-                        print("click en RECTANGULO2 correcto")
+                        modo_dificultad = "medio"
                         
                     elif boton3_nivel.collidepoint(posicion):
-                        print("click en RECTAngulo 3 CORRECTO")
+                        modo_dificultad = "dificil"
                     
                     elif boton4_nivel.collidepoint(posicion):
                         print("click en rectangulo 4 CORRECTO")
@@ -217,7 +221,7 @@ while True:
 
             
             case "jugar":
-                
+    
                 pantalla.blit(correccion_tamaño_jugar,(0,0))
 
                 if bandera_barcos == False: #ésta bandera está para controlar el reinicio del juego
@@ -226,54 +230,30 @@ while True:
                     bandera_barcos = True 
                     
                 dibujar_escenario(pantalla, tamaño1, columna1, fila1) #esto es la cuadricula 10x10 
-                lista_barcos_10 = dibujar_barcos(pantalla, matriz_10, tamaño1) #dibuja los barcos en la cuadricula, guarda todo en una lista            
-                bandera_barcos = reiniciar_partida(evento,bandera_barcos) #boton de reinicio 
+                lista_barcos_10 = dibujar_barcos(pantalla, matriz_10, tamaño1) #dibujo los barcos en la cuadricula, guarda todo en una lista            
+                bandera_barcos = reiniciar_partida(evento,bandera_barcos,pantalla_actual,disparos_realizados,disparos_acertados) #boton de reinicio 
                 
                 
-                if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
-                    colision = False
-
-                    fila_a = evento.pos[1] // tamaño1 
-                    columna_a = evento.pos[0] // tamaño1
-
-                    for rectangulancio in lista_barcos_10: 
-                        if rectangulancio.collidepoint(evento.pos):
-                            print("Colision")
-                            colision = True
-                            
-
-                    if not colision: 
-                        if (fila_a >= 0 and fila_a < 10) and (columna_a >= 0 and columna_a <10):
-                            disparo = (fila_a, columna_a)
-
-                            if disparo in disparos_realizados:
-                                print("Ya disparaste ahí")
-                            else:
-                                disparos_realizados.append(disparo)
-
-                                if matriz_10[fila_a][columna_a] == 0:
-
-                                    pantalla.blit(correccion_disparo_agua, (0,0))
-
-
-
+                fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,correccion_fuego,matriz_10,correccion_disparo_agua,disparos_acertados)   
                 
+                
+                for pos in disparos_acertados:  #pos = (x, y) coordenadas guardadas en la lista disparos acertados 
+                    pantalla.blit(correccion_fuego, pos)
+                
+                    
+                    #falta vincular la colision a un puntaje y un evento 
+                    #crear otra opcion que anule los 1 de los barcos colisionados por el click
+                    #crear un evento o variable para terminar el juego si todos los barcos son destruidos 
 
-                            
-
-
-                # faltan eventos propios
-
-                #desarrollar una funcion mouse que sea general y no tenga sida
-                #modificar la funcion "dibujar escenario para que tenga indices con numero y letra"
-                #ver si pueden dibujarse los barcos que aun no llegue a eso
+                    #modificar la funcion "dibujar escenario para que tenga indices con numero y letra"
+                
                 
 
 
 
 
             case "puntaje": #la funcion puntaje va vinculada con los eventos propios y las interacciones de jugar
-                pass   
+                pass
 
 
         funcion_teclado(evento)
