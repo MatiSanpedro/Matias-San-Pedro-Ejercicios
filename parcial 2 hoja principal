@@ -104,15 +104,19 @@ imagen_fondo_jugar = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/oc
 correccion_tamaño_jugar = pg.transform.scale(imagen_fondo_jugar,(800,600))
 
 #barcos
-
-
-'''
 bandera_barcos = False
 matriz_10 = matriz_de_10x10()
 lista_barcos_generados = barcos_de_matriz_10(matriz_10)
-matriz_vacia_10 = []
-#reinicio = reiniciar_partida(evento,bandera_barcos)
-'''
+
+#disparos 
+
+disparos_realizados = []
+disparo_agua = pg.image.load("C:/Users/Kaio/Documents/parcial2_archivos/pyxeldraw/perdida_agua.png")
+correccion_disparo_agua = pg.transform.scale(disparo_agua, (50,50))
+
+
+
+
 
 
 #bucle principal 
@@ -213,26 +217,49 @@ while True:
 
             
             case "jugar":
-                bandera_barcos = False
-                pantalla.blit(correccion_tamaño_jugar,(0,0))
                 
-                if bandera_barcos == False:
-                    matriz_10 = matriz_de_10x10()
-                    dibujar_escenario(pantalla,tamaño1,columna1,fila1)
-                    lista_barcos_10 = dibujar_barcos(pantalla,matriz_10,tamaño1) 
-                    bandera_barcos = True
+                pantalla.blit(correccion_tamaño_jugar,(0,0))
 
-                    reiniciar_partida(evento,bandera_barcos)
-
-
+                if bandera_barcos == False: #ésta bandera está para controlar el reinicio del juego
+                    matriz_10 = matriz_de_10x10()  
+                    lista_barcos_generados = barcos_de_matriz_10(matriz_10) #estos son los barcos insertados, guardados en una lista
+                    bandera_barcos = True 
+                    
+                dibujar_escenario(pantalla, tamaño1, columna1, fila1) #esto es la cuadricula 10x10 
+                lista_barcos_10 = dibujar_barcos(pantalla, matriz_10, tamaño1) #dibuja los barcos en la cuadricula, guarda todo en una lista            
+                bandera_barcos = reiniciar_partida(evento,bandera_barcos) #boton de reinicio 
+                
+                
                 if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
-                    for rectangulancio in lista_barcos_10:
+                    colision = False
+
+                    fila_a = evento.pos[1] // tamaño1 
+                    columna_a = evento.pos[0] // tamaño1
+
+                    for rectangulancio in lista_barcos_10: 
                         if rectangulancio.collidepoint(evento.pos):
-                            print("la colision con barcos funciona")
+                            print("Colision")
+                            colision = True
+                            
+
+                    if not colision: 
+                        if (fila_a >= 0 and fila_a < 10) and (columna_a >= 0 and columna_a <10):
+                            disparo = (fila_a, columna_a)
+
+                            if disparo in disparos_realizados:
+                                print("Ya disparaste ahí")
+                            else:
+                                disparos_realizados.append(disparo)
+
+                                if matriz_10[fila_a][columna_a] == 0:
+
+                                    pantalla.blit(correccion_disparo_agua, (0,0))
 
 
 
+                
 
+                            
 
 
                 # faltan eventos propios
@@ -252,16 +279,10 @@ while True:
         funcion_teclado(evento)
         pausar_despausar(evento)
         
-        
-
-   
-     
 
 
 
     pg.display.flip()
 
-'''
 
 
-                        '''
