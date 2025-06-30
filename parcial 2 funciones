@@ -3,6 +3,33 @@ import pygame as pg
 import time
 import random
 
+
+
+def mostrar_menu(pantalla):
+    pantalla.fill((50,50,50))
+    fuente = pg.font.SysFont("Arial",50)
+    texto = fuente.render("HACE CLICK PARA JUGAR",True, (255,255,255))
+    pantalla.blit(texto, (100,200))
+
+    for evento in pg.event.get():
+        if evento.type ==pg.QUIT:
+            return "salir"
+        #if evento.type == pg.MOUSEBUTTONDOWN:
+         #   return "juego"
+    
+    return "menu"
+
+
+def mostrar_juego(pantalla):
+    pantalla.fill((0,100,200))
+    
+
+    for evento in pg.event.get():
+        if evento.type == pg.QUIT:
+            return "salir"
+        
+    return "juego"
+
 #matrices 
 
 def matriz_de_10x10():
@@ -127,7 +154,7 @@ def dibujar_barcos(pantalla,matriz:list,tamaño):
             
             if matriz[filass][columnass] == 1:
                 rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
-                pg.draw.rect(pantalla,(60,0,0),rectangulo)
+                pg.draw.rect(pantalla,(0,0,255),rectangulo)
                 pg.draw.rect(pantalla, (0, 0, 0), rectangulo, 1)
                 
                 lista_de_barcos.append(rectangulo)
@@ -145,30 +172,7 @@ print(efe)
 '''
 
 
-def mostrar_menu(pantalla):
-    pantalla.fill((50,50,50))
-    fuente = pg.font.SysFont("Arial",50)
-    texto = fuente.render("HACE CLICK PARA JUGAR",True, (255,255,255))
-    pantalla.blit(texto, (100,200))
 
-    for evento in pg.event.get():
-        if evento.type ==pg.QUIT:
-            return "salir"
-        #if evento.type == pg.MOUSEBUTTONDOWN:
-         #   return "juego"
-    
-    return "menu"
-
-
-def mostrar_juego(pantalla):
-    pantalla.fill((0,100,200))
-    
-
-    for evento in pg.event.get():
-        if evento.type == pg.QUIT:
-            return "salir"
-        
-    return "juego"
 
 
 def funcion_teclado(evento):
@@ -185,13 +189,7 @@ def funcion_teclado(evento):
             print("se ha levantao la tecla")
         
 
-#REINICIAR | requiere que le pase "evento" y "bandera_barcos"
-def reiniciar_partida(evento,booleano): 
-    if evento.type == pg.KEYDOWN and evento.key ==pg.K_r:
-        booleano = False
-    
-    
-    return booleano 
+
 
 
 
@@ -265,3 +263,81 @@ def funcion_mouse_nivel(evento,boton1_nivel,boton2_nivel,boton3_nivel):
 
             if evento.type == pg.MOUSEBUTTONUP:
                 print("se solto el click")
+
+
+
+
+
+#chequear esto
+def guardar_disparos_acertados(matriz_10,disparos_realizados,pantalla,imagen_agua,tamaño1,imagen_golpe):
+    for fila, columna in disparos_realizados:
+        if matriz_10[fila][columna] == 0:
+            pantalla.blit(imagen_agua, (columna * tamaño1, fila * tamaño1))
+        elif matriz_10[fila][columna] == 1:
+            pantalla.blit(imagen_golpe, (columna * tamaño1, fila * tamaño1))
+
+
+#dibuja los disparos hechos al agua
+def blit_de_agua(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua):
+    for fila_a, columna_a in disparos_realizados:
+        if matriz_10[fila_a][columna_a] == 0:
+            x = columna_a * tamaño1
+            y = fila_a * tamaño1
+
+            pantalla.blit(correccion_disparo_agua, (x,y))
+        
+
+def blit_de_fuego(matriz_10,fila_a,columna_a,tamaño1,pantalla,correccion_fuego):
+    if matriz_10[fila_a][columna_a] == 1:
+        x2 = columna_a * tamaño1
+        y2 = fila_a * tamaño1
+        pantalla.blit(correccion_fuego, (x2,y2))
+
+
+
+#REINICIAR | requiere que le pase "evento" y "bandera_barcos"
+def reiniciar_partida(evento,booleano,pantalla_actual,disparos_realizados,disparos_acertados): 
+    if evento.type == pg.KEYDOWN and evento.key ==pg.K_r:
+        booleano = False
+        disparos_realizados.clear() #vacio la lista de disparos para reiniciar la funcion
+        disparos_acertados.clear()
+    
+    return booleano
+
+
+
+def fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,correccion_fuego,matriz_10,correccion_disparo_agua,disparos_acertados):
+    if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
+        colision = False #uso esta bandera para diferenciar si disparo al agua o a un barco
+
+        fila_a = evento.pos[1] // tamaño1  
+        columna_a = evento.pos[0] // tamaño1
+
+        for rectangulancio in lista_barcos_10:  #rectangulancio = rectangulo, el nombre estúpido es para no confundir variables 
+            if rectangulancio.collidepoint(evento.pos): #esto esta para detectar click en los barcos 
+
+                posicion_fuego = (columna_a * tamaño1, fila_a * tamaño1)
+                colision = True
+                
+                if posicion_fuego not in disparos_acertados:
+                    disparos_acertados.append(posicion_fuego)
+                    print("disparo acertado ")
+                else:
+                    print("ya disparaste en esa posicion")
+
+
+        
+        if not colision: 
+            if (fila_a >= 0 and fila_a < 10) and (columna_a >= 0 and columna_a <10):
+                disparo = (fila_a, columna_a)
+
+                if disparo in disparos_realizados: #esto detecta si disparé dos veces en el mismo punto
+                    print("Ya disparaste en esa posicion") 
+                else:
+                    disparos_realizados.append(disparo)
+
+        
+    blit_de_agua(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua)
+
+    
+    
