@@ -53,6 +53,7 @@ def matriz_de_20x20():
         
         
     return matriz_final
+matriz_mierdosa = matriz_de_20x20()
 
 
 
@@ -87,7 +88,7 @@ def cero_uno_matriz_de_10(matriz):
 
 def barcos_de_matriz_10(matriz)-> list:
 
-    #REFORMA DEL CODIGO DE BARCOS, USAR ESTE
+    #REFORME DEL CODIGO DE BARCOS, USAR ESTE
 
     unos = [
             (1, 4),  #1 grupo de largo 4 (acorazado)
@@ -131,6 +132,55 @@ def barcos_de_matriz_10(matriz)-> list:
     return matriz
 
 
+#barcos de matriz_20
+
+def barcos_de_matriz_20(matriz)->list:
+    unos = [
+            (2, 4),  #2 grupo de largo 4 (acorazado)
+            (4, 3),  #4 grupos de largo 3 (cruceros)
+            (6, 2),  #6 grupos de largo 2 (destructores)
+            (8, 1),  #8 uno solo (submarino)
+        
+        ]
+
+    for tupla in unos: #separo la tupla en 2, IZQ= cantidad de unos, DER= veces que se insertan los unos de la izquierda
+        cantidad = tupla[0] 
+        largo = tupla[1]
+        for i in range(cantidad):
+            colocado = False
+            intentos = 0
+
+            while not colocado and intentos < 100: # es solo un limite, quiero evitar que se haga infinito
+                    fila = random.randint(0, 19)      #lugar al azar en fila
+                    columna = random.randint(0, 20 - largo) #misma cosa, le resto "largo" para que no se pase del limite de 20
+                
+
+                    espacio_libre = True 
+                    for j in range(largo):
+                        if matriz[fila][columna + j] != 0: #reviso que exista espacio 
+                        
+                            espacio_libre = False 
+                            break
+                    
+                    if espacio_libre == True:
+                        for j in range(largo):
+                            matriz[fila][columna + j] = 1
+                    
+                        colocado = True
+
+                    intentos += 1
+                    if columna + largo > len(matriz[0]): #no confio en mis calculos jaja, si hay alguna que se pasa del limite la voy a ignorar
+                        continue
+            if not colocado:
+                    print(f" No se pudo colocar el ultimo {largo}")
+                 
+
+    return matriz
+
+
+
+
+
 #escenario 
 
 def dibujar_escenario(pantalla, tamaño:int,columna:int,fila:int):
@@ -145,6 +195,7 @@ def dibujar_escenario(pantalla, tamaño:int,columna:int,fila:int):
 #dibujar los barcos (requiere la matriz)
 #esto ademas de dibujarlos en pantalla, devuelve los rectangulos que dibuje en una lista 
 
+
 def dibujar_barcos(pantalla,matriz:list,tamaño):
 
     lista_de_barcos = []
@@ -154,22 +205,15 @@ def dibujar_barcos(pantalla,matriz:list,tamaño):
             
             if matriz[filass][columnass] == 1:
                 rectangulo = pg.Rect(columnass * tamaño, filass * tamaño, tamaño, tamaño)
-                pg.draw.rect(pantalla,(0,0,255),rectangulo)
+                pg.draw.rect(pantalla,(0,0,200),rectangulo)
                 pg.draw.rect(pantalla, (0, 0, 0), rectangulo, 1)
                 
                 lista_de_barcos.append(rectangulo)
 
-            
+            for fila in range(len(matriz)):
+                for columna in range(len(matriz[0])):
+                    print(matriz)
     return lista_de_barcos
-
-
-
-
-'''
-matriz_creada = matriz_de_10x10()
-efe = cero_uno(matriz_creada)
-print(efe)
-'''
 
 
 
@@ -192,40 +236,7 @@ def funcion_teclado(evento):
 
 
 
-
-def funcion_mouse_menu(evento,boton1,boton2,boton3,boton4,pantalla_actual):
-        
-        if evento.type == pg.MOUSEBUTTONDOWN: 
-            posicion = (evento.pos)
-            print(f"{posicion}")
-
-        
-            if evento.button ==1:
-                print("click izquierdo funciona")
-
-            if boton1.collidepoint(posicion):                
-                pantalla_actual = "nivel"
-
-            elif boton2.collidepoint(posicion):
-                print("click en RECTANGULO2 correcto")
-                
-            elif boton3.collidepoint(posicion):
-                print("click en RECTAngulo 3 CORRECTO")
-
-            elif boton4.collidepoint(posicion):
-                pg.quit()
-                quit()
-                
-
-            elif evento.button ==3:
-                    print("click derecho funciona")
-
-        if evento.type == pg.MOUSEBUTTONUP:
-            print("se solto el click")
-
-       
-
-
+#pausa - despausa
 def pausar_despausar(evento):
     if evento.type == pg.KEYDOWN:
         if evento.key == pg.K_p: # P = pausa 
@@ -239,35 +250,10 @@ def pausar_despausar(evento):
         
 
        
-def funcion_mouse_nivel(evento,boton1_nivel,boton2_nivel,boton3_nivel):
-    if evento.type == pg.MOUSEBUTTONDOWN: 
-            posicion = (evento.pos)
-            print(f"{posicion}")
-
-        
-            if evento.button ==1:
-                print("click izquierdo funciona")
-
-            if boton1_nivel.collidepoint(posicion):                
-                print("click en rectangulo 1 correcto")
-
-            elif boton2_nivel.collidepoint(posicion):
-                print("click en RECTANGULO2 correcto")
-                
-            elif boton3_nivel.collidepoint(posicion):
-                print("click en RECTAngulo 3 CORRECTO")
-                
-
-            elif evento.button ==3:
-                    print("click derecho funciona")
-
-            if evento.type == pg.MOUSEBUTTONUP:
-                print("se solto el click")
 
 
 
-
-
+#no usado
 #chequear esto
 def guardar_disparos_acertados(matriz_10,disparos_realizados,pantalla,imagen_agua,tamaño1,imagen_golpe):
     for fila, columna in disparos_realizados:
@@ -278,15 +264,24 @@ def guardar_disparos_acertados(matriz_10,disparos_realizados,pantalla,imagen_agu
 
 
 #dibuja los disparos hechos al agua
-def blit_de_agua(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua):
+def blit_de_agua_10(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua):
     for fila_a, columna_a in disparos_realizados:
         if matriz_10[fila_a][columna_a] == 0:
             x = columna_a * tamaño1
             y = fila_a * tamaño1
 
             pantalla.blit(correccion_disparo_agua, (x,y))
-        
 
+def blit_de_agua_20(disparos_realizados,matriz_20,tamaño2,pantalla,correccion_disparo_agua_20):
+    for fila_a, columna_a in disparos_realizados:
+        if matriz_20[fila_a][columna_a] == 0:
+            x = columna_a * tamaño2
+            y = fila_a * tamaño2
+
+            pantalla.blit(correccion_disparo_agua_20, (x,y))
+
+
+#dibuja los aciertos NO USADO 
 def blit_de_fuego(matriz_10,fila_a,columna_a,tamaño1,pantalla,correccion_fuego):
     if matriz_10[fila_a][columna_a] == 1:
         x2 = columna_a * tamaño1
@@ -306,10 +301,12 @@ def reiniciar_partida(evento,booleano,pantalla_actual,disparos_realizados,dispar
 
 
 
-def fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,correccion_fuego,matriz_10,correccion_disparo_agua,disparos_acertados):
+def fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,matriz_10,correccion_disparo_agua,
+                 disparos_acertados,puntaje,lista_barcos_generados,destruido):
+    
     if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
         colision = False #uso esta bandera para diferenciar si disparo al agua o a un barco
-
+        
         fila_a = evento.pos[1] // tamaño1  
         columna_a = evento.pos[0] // tamaño1
 
@@ -321,7 +318,24 @@ def fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,co
                 
                 if posicion_fuego not in disparos_acertados:
                     disparos_acertados.append(posicion_fuego)
+                    puntaje +=5
+                    print(f"{puntaje}")
                     print("disparo acertado ")
+                    for barco in lista_barcos_generados: #los barcos son tuplas en la lista 
+                        if (fila_a, columna_a) in barco: #busco la tupla en la lista 
+                            destruido = True
+
+                            for parte in barco: #le puse parte, porque ubica "partes" del barco si tiene mas de un casillero
+                                pos_pixeles = (parte[1] * tamaño1, parte[0] * tamaño1) #parte[1] = x | parte[0] = y
+                                if pos_pixeles not in disparos_acertados:
+                                    destruido = False
+                                    break
+                            if destruido:
+                                puntos_extra = 10 * len(barco)
+                                puntaje += puntos_extra
+                                print(f"barco completo hundido + {puntos_extra} puntos")
+
+               
                 else:
                     print("ya disparaste en esa posicion")
 
@@ -330,14 +344,101 @@ def fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,co
         if not colision: 
             if (fila_a >= 0 and fila_a < 10) and (columna_a >= 0 and columna_a <10):
                 disparo = (fila_a, columna_a)
-
+                
+                
                 if disparo in disparos_realizados: #esto detecta si disparé dos veces en el mismo punto
                     print("Ya disparaste en esa posicion") 
                 else:
                     disparos_realizados.append(disparo)
+                    puntaje -=1 
+                    print(f"{puntaje}")
+    blit_de_agua_10(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua)
+    
+
+
+def fuego_y_agua_20(evento,tamaño2,lista_barcos_20,disparos_realizados,pantalla,matriz_20,correccion_disparo_agua_20,
+                 disparos_acertados,puntaje,lista_barcos_generados,destruido):
+    
+    if evento.type == pg.MOUSEBUTTONDOWN and evento.button == 1:
+        colision = False #uso esta bandera para diferenciar si disparo al agua o a un barco
+        
+        fila_a = evento.pos[1] // tamaño2  
+        columna_a = evento.pos[0] // tamaño2
+
+        for rectangulancio in lista_barcos_20:  #rectangulancio = rectangulo, el nombre estúpido es para no confundir variables 
+            if rectangulancio.collidepoint(evento.pos): #esto esta para detectar click en los barcos 
+
+                posicion_fuego = (columna_a * tamaño2, fila_a * tamaño2)
+                colision = True
+                
+                if posicion_fuego not in disparos_acertados:
+                    disparos_acertados.append(posicion_fuego)
+                    puntaje +=5
+                    print(f"{puntaje}")
+                    print("disparo acertado ")
+                    for barco in lista_barcos_generados: #los barcos son tuplas en la lista 
+                        if (fila_a, columna_a) in barco: #busco la tupla en la lista 
+                            destruido = True
+
+                            for parte in barco: #le puse parte, porque ubica "partes" del barco si tiene mas de un casillero
+                                pos_pixeles = (parte[1] * tamaño2, parte[0] * tamaño2) #parte[1] = x | parte[0] = y
+                                if pos_pixeles not in disparos_acertados:
+                                    destruido = False
+                                    break
+                            if destruido:
+                                puntos_extra = 10 * len(barco)
+                                puntaje += puntos_extra
+                                print(f"barco completo hundido + {puntos_extra} puntos")
+
+               
+                else:
+                    print("ya disparaste en esa posicion")
+
 
         
-    blit_de_agua(disparos_realizados,matriz_10,tamaño1,pantalla,correccion_disparo_agua)
+        if not colision: 
+            if (fila_a >= 0 and fila_a < 10) and (columna_a >= 0 and columna_a <10):
+                disparo = (fila_a, columna_a)
+                
+                
+                if disparo in disparos_realizados: #esto detecta si disparé dos veces en el mismo punto
+                    print("Ya disparaste en esa posicion") 
+                else:
+                    disparos_realizados.append(disparo)
+                    puntaje -=1 
+                    print(f"{puntaje}")
+    blit_de_agua_20(disparos_realizados,matriz_20,tamaño2,pantalla,correccion_disparo_agua_20)
 
+
+
+
+
+def victoria():
+
+    pass
+
+
+
+#NO USADO, BORRAR  
+def juego_10(evento,pantalla,modo_dificultad,texto_puntaje,correccion_tamaño_jugar,tamaño1,columna1,fila1,pantalla_actual,disparos_realizados,
+             disparos_acertados,correccion_disparo_agua,puntaje,correccion_fuego,destruido):  
+    pantalla.blit(texto_puntaje,(200,200))
+    pantalla.blit(correccion_tamaño_jugar,(0,0))
+
+    if bandera_barcos == False: #ésta bandera está para controlar el reinicio del juego
+        matriz_10 = matriz_de_10x10()  
+        lista_barcos_generados = barcos_de_matriz_10(matriz_10) #estos son los barcos insertados, guardados en una lista
+        bandera_barcos = True 
+        
+    dibujar_escenario(pantalla, tamaño1, columna1, fila1) #esto es la cuadricula 10x10 
+    lista_barcos_10 = dibujar_barcos(pantalla, matriz_10, tamaño1) #dibujo los barcos en la cuadricula, guarda todo en una lista            
+    bandera_barcos = reiniciar_partida(evento,bandera_barcos,pantalla_actual,disparos_realizados,disparos_acertados) #boton de reinicio 
     
     
+    fuego_y_agua(evento,tamaño1,lista_barcos_10,disparos_realizados,pantalla,matriz_10,correccion_disparo_agua,
+                 disparos_acertados,puntaje,lista_barcos_generados,destruido)   
+    
+    
+    for pos in disparos_acertados:  #pos = (x, y) coordenadas guardadas en la lista disparos acertados 
+        pantalla.blit(correccion_fuego, pos) #dibujo del fuego, disparo acertado
+
